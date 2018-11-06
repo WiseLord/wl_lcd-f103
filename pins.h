@@ -67,6 +67,23 @@ void pinsInit(void);
 #define DISP_DATA_HI_Pin        (LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 | LL_GPIO_PIN_11 | \
                                  LL_GPIO_PIN_12 | LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15)
 
+#define DISP_D8_Port            GPIOB
+#define DISP_D8_Pin             LL_GPIO_PIN_8
+#define DISP_D9_Port            GPIOB
+#define DISP_D9_Pin             LL_GPIO_PIN_9
+#define DISP_D10_Port           GPIOB
+#define DISP_D10_Pin            LL_GPIO_PIN_10
+#define DISP_D11_Port           GPIOB
+#define DISP_D11_Pin            LL_GPIO_PIN_11
+#define DISP_D12_Port           GPIOB
+#define DISP_D12_Pin            LL_GPIO_PIN_12
+#define DISP_D13_Port           GPIOB
+#define DISP_D13_Pin            LL_GPIO_PIN_13
+#define DISP_D14_Port           GPIOB
+#define DISP_D14_Pin            LL_GPIO_PIN_14
+#define DISP_D15_Port           GPIOB
+#define DISP_D15_Pin            LL_GPIO_PIN_15
+
 // TFT parallel (8-bit) wiring
 #define DISP_CS_Port            GPIOC
 #define DISP_CS_Pin             LL_GPIO_PIN_9
@@ -76,8 +93,8 @@ void pinsInit(void);
 #define DISP_WR_Pin             LL_GPIO_PIN_10
 #define DISP_RS_Port            GPIOC
 #define DISP_RS_Pin             LL_GPIO_PIN_8
-#define DISP_RST_Port           GPIOC
-#define DISP_RST_Pin            LL_GPIO_PIN_7
+#define DISP_RST_Port           GPIOB
+#define DISP_RST_Pin            LL_GPIO_PIN_5
 #define DISP_BCKL_Port          GPIOC
 #define DISP_BCKL_Pin           LL_GPIO_PIN_12
 
