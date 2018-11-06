@@ -62,14 +62,18 @@ void pinsInit(void);
 #define INPUT_Pin               (BTN_0_Pin | BTN_1_Pin | BTN_2_Pin | BTN_3_Pin | \
                                  BTN_4_Pin | BTN_5_Pin | ENC_A_Pin | ENC_B_Pin)
 
+// TFT LCD pins
+#define DISP_DATA_HI_Port       GPIOB
+#define DISP_DATA_HI_Pin        (LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 | LL_GPIO_PIN_11 | \
+                                 LL_GPIO_PIN_12 | LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15)
+
+// TFT parallel (8-bit) wiring
 #define DISP_CS_Port            GPIOC
 #define DISP_CS_Pin             LL_GPIO_PIN_9
-#define DISP_SCK_Port           GPIOC
-#define DISP_SCK_Pin            LL_GPIO_PIN_6
 #define DISP_RD_Port            GPIOC
 #define DISP_RD_Pin             LL_GPIO_PIN_11
-#define DISP_RW_Port            GPIOC
-#define DISP_RW_Pin             LL_GPIO_PIN_10
+#define DISP_WR_Port            GPIOC
+#define DISP_WR_Pin             LL_GPIO_PIN_10
 #define DISP_RS_Port            GPIOC
 #define DISP_RS_Pin             LL_GPIO_PIN_8
 #define DISP_RST_Port           GPIOC
@@ -77,22 +81,16 @@ void pinsInit(void);
 #define DISP_BCKL_Port          GPIOC
 #define DISP_BCKL_Pin           LL_GPIO_PIN_12
 
-#define DISP_8BIT_DHI_Port      INPUT_Port
-#define DISP_8BIT_DHI_Pin       INPUT_Pin
-#define DISP_8BIT_CS            DISP_CS
-#define DISP_8BIT_RS            DISP_RS
-#define DISP_8BIT_WR            DISP_RW
-#define DISP_8BIT_RD            DISP_RD
-#define DISP_8BIT_RST           DISP_RST
-#define DISP_8BIT_LED           DISP_BCKL
-
-#define DISP_SPI_CS             DISP_CS
-#define DISP_SPI_RST            DISP_RST
+// TFT serial (SPI 3 lines) wiring
+#define DISP_SPI_SCK_Port       GPIOC
+#define DISP_SPI_SCK_Pin        LL_GPIO_PIN_6
 #define DISP_SPI_DC             DISP_RS
-#define DISP_SPI_SDI            DISP_RW
-#define DISP_SPI_SCK            DISP_SCK
-#define DISP_SPI_LED            DISP_BCKL
+#define DISP_SPI_SDI            DISP_WR
 #define DISP_SPI_SDO            DISP_RD
 
+// TFT I2C (SSD1306) wiring
+#define DISP_I2C_Port           GPIOC
+#define DISP_I2C_SCK_Pin        DISP_RS_Pin
+#define DISP_I2C_SDA_Pin        DISP_RST_Pin
 
 #endif // PINS_H
