@@ -3,11 +3,16 @@ DISPVAR = 8BIT
 
 TARGET := wl_lcd-f103_$(shell echo $(DISPLAY)_$(DISPVAR) | tr A-Z a-z)
 
-DISP_HI_BYTE = YES
-
 C_DEFS = -DUSE_FULL_LL_DRIVER -DSTM32F103xB
+
+DISP_HI_BYTE = YES
+DISP_LO_BYTE = YES
+
 ifeq "$(DISP_HI_BYTE)" "YES"
   C_DEFS += -D_DISP_HI_BYTE
+endif
+ifeq "$(DISP_LO_BYTE)" "YES"
+  C_DEFS += -D_DISP_LO_BYTE
 endif
 
 C_SOURCES = main.c
