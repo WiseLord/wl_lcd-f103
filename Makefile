@@ -30,6 +30,9 @@ drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c
 
+# Display source files
+C_SOURCES += $(wildcard display/fonts/font*.c)
+C_SOURCES += $(wildcard display/icons/icon*.c)
 
 ifeq "$(DISPLAY)" "KS0108A"
   C_SOURCES += display/gm128x64/ks0108.c

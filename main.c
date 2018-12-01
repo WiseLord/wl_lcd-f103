@@ -97,25 +97,43 @@ int main(void)
 
     static Glcd *glcd;
     glcdInit(&glcd);
+//    glcdRotate(LCD_ROTATE_180);
 
     glcdDrawRect(0, 0, 320, 240, LCD_COLOR_BLACK);
+    glcdDrawRing(250, 80, 56, LCD_COLOR_WHITE);
 
-    glcdDrawRing(160, 120, 56, LCD_COLOR_WHITE);
+    glcdDrawRect(200, 160, 30, 60, LCD_COLOR_RED);
+    glcdDrawRect(240, 160, 30, 60, LCD_COLOR_LIME);
+    glcdDrawRect(280, 160, 30, 60, LCD_COLOR_BLUE);
+
+    glcdSetFont(&fontterminus32);
+
+    glcdSetFontColor(LCD_COLOR_RED);
+    glcdSetXY(10, 10);
+    glcdWriteString("Red string");
+
+    glcdSetFontColor(LCD_COLOR_LIME);
+    glcdSetXY(10, 90);
+    glcdWriteString("Green string");
+
+    glcdSetFontColor(LCD_COLOR_BLUE);
+    glcdSetXY(10, 170);
+    glcdWriteString("Blue string");
 
     LL_mDelay(200);
 
     while (1) {
-        glcdDrawCircle(160, 120, 50, LCD_COLOR_RED);
+        glcdDrawCircle(250, 80, 50, LCD_COLOR_RED);
         LL_mDelay(500);
-        glcdDrawCircle(160, 120, 50, LCD_COLOR_YELLOW);
+        glcdDrawCircle(250, 80, 50, LCD_COLOR_YELLOW);
         LL_mDelay(500);
-        glcdDrawCircle(160, 120, 50, LCD_COLOR_GREEN);
+        glcdDrawCircle(250, 80, 50, LCD_COLOR_LIME);
         LL_mDelay(500);
-        glcdDrawCircle(160, 120, 50, LCD_COLOR_AQUA);
+        glcdDrawCircle(250, 80, 50, LCD_COLOR_AQUA);
         LL_mDelay(500);
-        glcdDrawCircle(160, 120, 50, LCD_COLOR_BLUE);
+        glcdDrawCircle(250, 80, 50, LCD_COLOR_BLUE);
         LL_mDelay(500);
-        glcdDrawCircle(160, 120, 50, LCD_COLOR_MAGENTA);
+        glcdDrawCircle(250, 80, 50, LCD_COLOR_MAGENTA);
         LL_mDelay(500);
     }
 
