@@ -69,12 +69,16 @@ void glcdSetX(int16_t x);
 void glcdSetY(int16_t y);
 
 int16_t glcdFontSymbolPos(int32_t code);
+tImage *glcdGetUnrleImg(void);
+char *glcdGetUnrleImgData(void);
 void glcdDrawImage(tImage *img, int16_t x, int16_t y, uint16_t color, uint16_t bgColor);
 uint16_t glcdWriteIcon(uint16_t code, const tFont *iFont, uint16_t color, uint16_t bgColor);
 uint16_t glcdWriteChar(int32_t code);
 uint16_t glcdWriteString(char *string);
+uint16_t glcdWriteStringConst(const char *string);
 uint16_t glcdWriteStringFramed(char *string, uint8_t framed);
 
+void glcdDrawPixel(int16_t x, int16_t y, uint16_t color);
 void glcdDrawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
 void glcdDrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
 void glcdDrawFrame(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
@@ -82,6 +86,7 @@ void glcdDrawFrame(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t colo
 void glcdDrawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
 void glcdDrawRing(int16_t x0, int16_t y0, int16_t r, uint16_t color);
 
+void glcdShift(uint16_t value);
 void glcdUpdate(void);
 
 #ifdef __cplusplus

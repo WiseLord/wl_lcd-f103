@@ -3,6 +3,7 @@
 
 #include <stm32f1xx_ll_gpio.h>
 
+void pinsHwReset(void);
 void pinsInit(void);
 
 #define CONCAT(x,y)             x ## y

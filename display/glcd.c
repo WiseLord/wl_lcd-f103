@@ -1,19 +1,23 @@
 #include "glcd.h"
 
-#define STR_BUFSIZE             20
+#include <string.h>
+
+#define STR_BUFSIZE             64
 
 static Glcd glcd;
 static char strbuf[STR_BUFSIZE + 1];    // String buffer
-static uint8_t unRleData[1024];         // Storage for uncompressed image data
+
+static uint8_t unRleData[4096];         // Storage for uncompressed image data
+static tImage unRleImg = {
+    .rle = 0
+};
 
 static tImage *glcdUnRleImg(const tImage *img)
 {
-    static tImage ret = {
-        .rle = 0
-    };
+    tImage *ret = glcdGetUnrleImg();
 
-    ret.width = img->width;
-    ret.height = img->height;
+    ret->width = img->width;
+    ret->height = img->height;
 
     if (img->rle) {
         // Uncompress image to storage
@@ -37,14 +41,13 @@ static tImage *glcdUnRleImg(const tImage *img)
                 return 0;
             }
         }
-        ret.data = unRleData;
-        ret.size = (uint16_t)(outPtr - unRleData);
+        ret->size = (uint16_t)(outPtr - unRleData);
     } else {
-        ret.data = img->data;
-        ret.size = img->size;
+        ret->data = img->data;
+        ret->size = img->size;
     }
 
-    return &ret;
+    return ret;
 }
 
 void glcdInit(Glcd **value)
@@ -154,11 +157,17 @@ int16_t glcdFontSymbolPos(int32_t code)
     return sPos;
 }
 
-//static uint8_t getNextImgByte()
-//{
+tImage *glcdGetUnrleImg(void)
+{
+    unRleImg.data = unRleData;
 
-//}
+    return &unRleImg;
+}
 
+char *glcdGetUnrleImgData(void)
+{
+    return (char*)unRleData;
+}
 
 void glcdDrawImage(tImage *img, int16_t x, int16_t y, uint16_t color, uint16_t bgColor)
 {
@@ -265,8 +274,16 @@ static int32_t findSymbolCode(char **string)
 }
 
 uint16_t glcdWriteString(char *string)
+
 {
     return glcdWriteStringFramed(string, 0);
+}
+
+uint16_t glcdWriteStringConst(const char *string)
+{
+    strncpy(strbuf, string, STR_BUFSIZE);
+
+    return glcdWriteString(strbuf);
 }
 
 uint16_t glcdWriteStringFramed(char *string, uint8_t framed)
@@ -320,6 +337,13 @@ uint16_t glcdWriteStringFramed(char *string, uint8_t framed)
         ret += glcdWriteChar(LETTER_SPACE_CHAR);
 
     return ret;
+}
+
+void glcdDrawPixel(int16_t x, int16_t y, uint16_t color)
+{
+    if (glcd.drv->drawPixel) {
+        glcd.drv->drawPixel(x, y, color);
+    }
 }
 
 void glcdDrawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
@@ -446,6 +470,13 @@ void glcdDrawRing(int16_t x0, int16_t y0, int16_t r, uint16_t color)
         glcd.drv->drawPixel(x0 - y, y0 + x, color);
         glcd.drv->drawPixel(x0 + y, y0 - x, color);
         glcd.drv->drawPixel(x0 - y, y0 - x, color);
+    }
+}
+
+void glcdShift(uint16_t value)
+{
+    if (glcd.drv->shift) {
+        glcd.drv->shift(value);
     }
 }
 
