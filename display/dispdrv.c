@@ -140,16 +140,23 @@ static inline void dispdrvSendWord(uint16_t data)
 void dispdrvInit(DispDriver **driver)
 {
 #ifdef _DISP_SPI
+    SET(DISP_SPI_DC);
     dispdrvInitSPI();
 #else
+#ifdef _DISP_READ_ENABLED
     SET(DISP_RD);
+#endif
     SET(DISP_WR);
     SET(DISP_RS);
     SET(DISP_CS);
 #endif
 
-    pinsHwReset();
+#ifdef _DISP_RST_ENABLED
+    CLR(DISP_RST);
     LL_mDelay(50);
+    SET(DISP_RST);
+    LL_mDelay(50);
+#endif
 
 #if defined (_KS0108A) || defined(_KS0108B)
     ks0108Init(driver);

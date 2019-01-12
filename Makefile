@@ -79,6 +79,7 @@ C_SOURCES += display/dispdrv.c
 C_SOURCES += display/glcd.c
 C_DEFS += -D_$(DISPLAY)
 C_DEFS += -D_DISP_$(DISPVAR)
+C_DEFS += -D_DISP_READ_ENABLED
 
 
 C_INCLUDES = \
