@@ -100,7 +100,7 @@ int main(void)
 //    glcdRotate(LCD_ROTATE_180);
 
     glcdDrawRect(0, 0, 320, 240, LCD_COLOR_BLACK);
-    glcdDrawRing(250, 80, 56, LCD_COLOR_WHITE);
+    glcdDrawRing(250, 80, 56, 3, LCD_COLOR_WHITE);
 
     glcdDrawRect(200, 160, 30, 60, LCD_COLOR_RED);
     glcdDrawRect(240, 160, 30, 60, LCD_COLOR_LIME);

@@ -34,15 +34,7 @@ drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c
 C_SOURCES += $(wildcard display/fonts/font*.c)
 C_SOURCES += $(wildcard display/icons/icon*.c)
 
-ifeq "$(DISPLAY)" "KS0108A"
-  C_SOURCES += display/gm128x64/ks0108.c
-else ifeq "$(DISPLAY)" "KS0108B"
-  C_SOURCES += display/gm128x64/ks0108.c
-else ifeq "$(DISPLAY)" "ST7920"
-  C_SOURCES += display/gm128x64/st7920.c
-else ifeq "$(DISPLAY)" "SSD1306"
-  C_SOURCES += display/gm128x64/ssd1306.c
-else ifeq "$(DISPLAY)" "ILI9163"
+ifeq "$(DISPLAY)" "ILI9163"
   C_SOURCES += display/gc160x128/ili9163.c
 else ifeq "$(DISPLAY)" "ST7735"
   C_SOURCES += display/gc160x128/st7735.c
