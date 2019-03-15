@@ -20,7 +20,6 @@ C_SOURCES = main.c
 C_SOURCES += pins.c
 
 C_SOURCES += \
-system/system_stm32f1xx.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c \
@@ -28,7 +27,9 @@ drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c \
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c \
+system/system_stm32f1xx.c
 
 # Display source files
 C_SOURCES += $(wildcard display/fonts/font*.c)
@@ -38,32 +39,40 @@ ifeq "$(DISPLAY)" "ILI9163"
   C_SOURCES += display/gc160x128/ili9163.c
 else ifeq "$(DISPLAY)" "ST7735"
   C_SOURCES += display/gc160x128/st7735.c
-else ifeq "$(DISPLAY)" "LS020"
-  C_SOURCES += display/gc176x132/ls020.c
+else ifeq "$(DISPLAY)" "L2F50126"
+  C_SOURCES += display/gc176x132/l2f50126.c
 else ifeq "$(DISPLAY)" "LPH9157"
   C_SOURCES += display/gc176x132/lph9157.c
+else ifeq "$(DISPLAY)" "LS020"
+  C_SOURCES += display/gc176x132/ls020.c
 else ifeq "$(DISPLAY)" "SSD1286A"
   C_SOURCES += display/gc176x132/ssd1286a.c
 else ifeq "$(DISPLAY)" "HX8340"
   C_SOURCES += display/gc220x176/hx8340.c
 else ifeq "$(DISPLAY)" "ILI9225"
   C_SOURCES += display/gc220x176/ili9225.c
+else ifeq "$(DISPLAY)" "HX8347"
+  C_SOURCES += display/gc320x240/hx8347.c
 else ifeq "$(DISPLAY)" "ILI9320"
   C_SOURCES += display/gc320x240/ili9320.c
 else ifeq "$(DISPLAY)" "ILI9341"
   C_SOURCES += display/gc320x240/ili9341.c
+else ifeq "$(DISPLAY)" "MC2PA8201"
+  C_SOURCES += display/gc320x240/mc2pa8201.c
+else ifeq "$(DISPLAY)" "S6D0129"
+  C_SOURCES += display/gc320x240/s6d0129.c
 else ifeq "$(DISPLAY)" "S6D0139"
   C_SOURCES += display/gc320x240/s6d0139.c
 else ifeq "$(DISPLAY)" "SPFD5408"
   C_SOURCES += display/gc320x240/spfd5408.c
-else ifeq "$(DISPLAY)" "MC2PA8201"
-  C_SOURCES += display/gc320x240/mc2pa8201.c
 else ifeq "$(DISPLAY)" "ILI9327"
   C_SOURCES += display/gc400x240/ili9327.c
 else ifeq "$(DISPLAY)" "ST7793"
   C_SOURCES += display/gc400x240/st7793.c
 else ifeq "$(DISPLAY)" "ILI9481"
   C_SOURCES += display/gc480x320/ili9481.c
+else ifeq "$(DISPLAY)" "ILI9486"
+  C_SOURCES += display/gc480x320/ili9486.c
 else ifeq "$(DISPLAY)" "R61581"
   C_SOURCES += display/gc480x320/r61581.c
 endif
