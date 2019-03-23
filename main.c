@@ -98,6 +98,7 @@ void printDispRegs(void)
     uint16_t args[num];
 
     for (uint16_t reg = 0x00; reg <= 0xFF; reg++) {
+        dispdrvReset();
         dispdrvReadReg(reg, args, num);
 
         bool hasData = false;

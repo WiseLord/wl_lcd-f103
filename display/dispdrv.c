@@ -373,8 +373,6 @@ uint16_t dispdrvReadData16(void)
 
 void dispdrvReadReg(uint16_t reg, uint16_t *args, uint8_t nArgs)
 {
-    dispdrvReset();
-
     CLR(DISP_CS);
 
     CLR(DISP_RS);
