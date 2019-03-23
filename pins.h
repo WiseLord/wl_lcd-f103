@@ -113,4 +113,7 @@ void pinsInit(void);
 #define DISP_I2C_SCK_Pin        DISP_RS_Pin
 #define DISP_I2C_SDA_Pin        DISP_RST_Pin
 
+// USART used for debugging
+#define USART_DBG               USART1
+
 #endif // PINS_H

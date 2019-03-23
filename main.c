@@ -2,12 +2,14 @@
 #include <stm32f1xx_ll_cortex.h>
 #include <stm32f1xx_ll_rcc.h>
 #include <stm32f1xx_ll_system.h>
+#include <stm32f1xx_ll_usart.h>
 #include <stm32f1xx_ll_utils.h>
 
 #include "display/glcd.h"
 
 #include <stm32f1xx_ll_utils.h>
 #include "pins.h"
+#include "usart.h"
 
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0    ((uint32_t)0x00000007)
@@ -95,6 +97,8 @@ int main(void)
 
     pinsInit();
 
+    usartInit(USART_DBG, 115200);
+
     static Glcd *glcd;
     glcdInit(&glcd);
 //    glcdRotate(LCD_ROTATE_180);
@@ -123,6 +127,8 @@ int main(void)
     LL_mDelay(200);
 
     while (1) {
+        usartSendString(USART_DBG, "Main loop\n\r");
+
         glcdDrawCircle(250, 80, 50, LCD_COLOR_RED);
         LL_mDelay(500);
         glcdDrawCircle(250, 80, 50, LCD_COLOR_YELLOW);
@@ -135,6 +141,7 @@ int main(void)
         LL_mDelay(500);
         glcdDrawCircle(250, 80, 50, LCD_COLOR_MAGENTA);
         LL_mDelay(500);
+
     }
 
     return 0;

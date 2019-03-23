@@ -18,17 +18,19 @@ endif
 C_SOURCES = main.c
 
 C_SOURCES += pins.c
+C_SOURCES += usart.c
 
 C_SOURCES += \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c \
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c \
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c \
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c \
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c \
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c \
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c \
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c \
 system/system_stm32f1xx.c
 
 # Display source files
