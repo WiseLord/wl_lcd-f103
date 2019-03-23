@@ -86,7 +86,6 @@ C_DEFS += -D_$(DISPLAY)
 C_DEFS += -D_DISP_$(DISPVAR)
 C_DEFS += -D_DISP_READ_ENABLED
 
-
 C_INCLUDES = \
 -Idrivers/STM32F1xx_HAL_Driver/Inc \
 -Idrivers/CMSIS/Device/ST/STM32F1xx/Include \

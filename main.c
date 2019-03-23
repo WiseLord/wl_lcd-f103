@@ -91,16 +91,45 @@ void SysTick_Handler(void)
 void printDispRegs(void)
 {
     usartSendString(USART_DBG, "\r========\r\n");
+#ifdef _DISP_READ_ENABLED
 
-    uint16_t args[8];
+    const uint8_t num = 10;
 
-    dispdrvReadReg(0xD3, args, 4);
+    uint16_t args[num];
 
-    for (uint8_t i = 0; i < 4; i++) {
-        char *str = glcdPrepareNum(args[i], 4, '0', 16);
+    for (uint16_t reg = 0x00; reg <= 0xFF; reg++) {
+        dispdrvReadReg(reg, args, num);
+
+        bool hasData = false;
+        for (uint8_t i = 0; i < num; i++) {
+            if (args[i]) {
+                hasData = true;
+                break;
+            }
+        }
+
+        if (!hasData) {
+            continue;
+        }
+
+        char *str = glcdPrepareNum(reg, 2, '0', 16);
         usartSendString(USART_DBG, str);
+        usartSendString(USART_DBG, ": ");
+
+        for (uint8_t i = 0; i < num; i++) {
+            if (args[i]) {
+                str = glcdPrepareNum(args[i], 4, '0', 16);
+            } else {
+                str = "----";
+            }
+            usartSendString(USART_DBG, str);
+            usartSendString(USART_DBG, " ");
+        }
         usartSendString(USART_DBG, "\n\r");
     }
+#else
+    usartSendString(USART_DBG, "\rRead pin is disabled\r\n");
+#endif
 }
 
 int main(void)
