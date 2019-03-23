@@ -139,7 +139,7 @@ static inline void dispdrvSendWord(uint16_t data)
     CLR(DISP_WR);
     SET(DISP_WR);
 #else
-#ifdef _DISP_8BIT
+#ifndef _DISP_SPI
     dispdrvBusOut();
 #endif
     uint8_t dataH = data >> 8;
@@ -348,7 +348,9 @@ uint16_t dispdrvReadData16(void)
 {
     uint16_t ret = 0;
 
+#ifndef _DISP_SPI
     dispdrvBusIn();
+#endif
 
 #if defined(_DISP_16BIT)
     CLR(DISP_RD);
@@ -362,7 +364,9 @@ uint16_t dispdrvReadData16(void)
     ret |= dispdrvReadByte();
 #endif
 
+#ifndef _DISP_SPI
     dispdrvBusOut();
+#endif
 
     return ret;
 }
