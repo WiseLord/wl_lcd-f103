@@ -88,6 +88,21 @@ void SysTick_Handler(void)
     }
 }
 
+void printDispRegs(void)
+{
+    usartSendString(USART_DBG, "\r========\r\n");
+
+    uint16_t args[8];
+
+    dispdrvReadReg(0xD3, args, 4);
+
+    for (uint8_t i = 0; i < 4; i++) {
+        char *str = glcdPrepareNum(args[i], 4, '0', 16);
+        usartSendString(USART_DBG, str);
+        usartSendString(USART_DBG, "\n\r");
+    }
+}
+
 int main(void)
 {
     // System
@@ -98,6 +113,7 @@ int main(void)
     pinsInit();
 
     usartInit(USART_DBG, 115200);
+    printDispRegs();
 
     static Glcd *glcd;
     glcdInit(&glcd);
@@ -127,8 +143,6 @@ int main(void)
     LL_mDelay(200);
 
     while (1) {
-        usartSendString(USART_DBG, "Main loop\n\r");
-
         glcdDrawCircle(250, 80, 50, LCD_COLOR_RED);
         LL_mDelay(500);
         glcdDrawCircle(250, 80, 50, LCD_COLOR_YELLOW);
@@ -141,7 +155,6 @@ int main(void)
         LL_mDelay(500);
         glcdDrawCircle(250, 80, 50, LCD_COLOR_MAGENTA);
         LL_mDelay(500);
-
     }
 
     return 0;

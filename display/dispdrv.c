@@ -158,7 +158,7 @@ static inline void dispdrvSendWord(uint16_t data)
 #endif
 }
 
-void dispdrvInit(DispDriver **driver)
+void dispdrvReset(void)
 {
 #ifdef _DISP_SPI
     SET(DISP_SPI_DC);
@@ -178,6 +178,11 @@ void dispdrvInit(DispDriver **driver)
     SET(DISP_RST);
 #endif
     LL_mDelay(50);
+}
+
+void dispdrvInit(DispDriver **driver)
+{
+    dispdrvReset();
 
 #if defined (_ILI9163)
     ili9163Init(driver);
@@ -312,3 +317,44 @@ void dispdrvSendImage(tImage *img, uint16_t color, uint16_t bgColor)
         }
     }
 }
+
+#ifdef _DISP_READ_ENABLED
+uint16_t dispdrvReadData16(void)
+{
+    uint16_t ret = 0;
+
+    dispdrvBusIn();
+
+    CLR(DISP_RD);
+    LL_mDelay(1);
+
+#if defined(_DISP_HI_BYTE)
+    ret |= DISP_DATA_LO_Port->IDR & 0x00FF;
+#endif
+#if defined(_DISP_LO_BYTE)
+    ret |= DISP_DATA_LO_Port->IDR & 0x00FF;
+#endif
+    SET(DISP_RD);
+
+    dispdrvBusOut();
+
+    return ret;
+}
+
+void dispdrvReadReg(uint16_t reg, uint16_t *args, uint8_t nArgs)
+{
+    dispdrvReset();
+
+    CLR(DISP_CS);
+
+    CLR(DISP_RS);
+    dispdrvSendData16(reg);
+    SET(DISP_RS);
+
+    for (uint8_t i = 0; i < nArgs; i++) {
+        args[i] = dispdrvReadData16();
+    }
+
+    SET(DISP_CS);
+}
+#endif
