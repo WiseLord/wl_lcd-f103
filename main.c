@@ -109,13 +109,14 @@ void printDispRegs(void)
             }
         }
 
-        if (!hasData) {
-            continue;
-        }
-
         char *str = glcdPrepareNum(reg, 2, '0', 16);
         usartSendString(USART_DBG, str);
         usartSendString(USART_DBG, ": ");
+
+        if (!hasData) {
+            usartSendString(USART_DBG, "\r");
+            continue;
+        }
 
         for (uint8_t i = 0; i < num; i++) {
             if (args[i]) {
