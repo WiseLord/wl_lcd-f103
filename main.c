@@ -141,7 +141,7 @@ int main(void)
     pinsInit();
 
     usartInit(USART_DBG, 115200);
-    printDispRegs();
+//    printDispRegs();
 
     static Glcd *glcd;
     glcdInit(&glcd);

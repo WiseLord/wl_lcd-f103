@@ -1,7 +1,7 @@
 PROJECT = wl_lcd-f103
 
-DISPLAY = ILI9320
-DISPVAR = 8BIT
+DISPLAY = ILI9341
+DISPVAR = SPI
 
 # Lowercase argument
 lc = $(shell echo $1 | tr '[:upper:]' '[:lower:]')
