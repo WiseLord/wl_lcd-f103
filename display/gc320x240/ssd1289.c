@@ -14,8 +14,10 @@ static DispDriver drv = {
     .shift = ssd1289Shift,
 };
 
-static inline void ssd1289InitSeq(void)
+void ssd1289Init(DispDriver **driver)
 {
+    *driver = &drv;
+
     CLR(DISP_CS);
 
     dispdrvWriteReg16(0x0000, 0x0001);
@@ -65,12 +67,6 @@ static inline void ssd1289InitSeq(void)
     dispdrvWriteReg16(0x004e, 0x0000);
 
     SET(DISP_CS);
-}
-
-void ssd1289Init(DispDriver **driver)
-{
-    *driver = &drv;
-    ssd1289InitSeq();
 }
 
 void ssd1289Rotate(uint8_t rotate)
