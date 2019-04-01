@@ -1,7 +1,12 @@
+PROJECT = wl_lcd-f103
+
 DISPLAY = ILI9320
 DISPVAR = 8BIT
 
-TARGET := wl_lcd-f103_$(shell echo $(DISPLAY)_$(DISPVAR) | tr A-Z a-z)
+# Lowercase argument
+lc = $(shell echo $1 | tr '[:upper:]' '[:lower:]')
+
+TARGET = $(call lc, $(PROJECT)_$(DISPLAY)_$(DISPVAR))
 
 C_DEFS = -DUSE_FULL_LL_DRIVER -DSTM32F103xB
 
@@ -15,99 +20,104 @@ ifeq "$(DISP_LO_BYTE)" "YES"
   C_DEFS += -D_DISP_LO_BYTE
 endif
 
+C_DEFS += -D_DISP_READ_ENABLED
+C_DEFS += -D_DISP_RST_ENABLED
+
 C_SOURCES = main.c
 
 C_SOURCES += pins.c
 C_SOURCES += usart.c
 
-C_SOURCES += \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c \
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c \
-system/system_stm32f1xx.c
-
 # Display source files
 C_SOURCES += $(wildcard display/fonts/font*.c)
 C_SOURCES += $(wildcard display/icons/icon*.c)
 
-ifeq "$(DISPLAY)" "ILI9163"
-  C_SOURCES += display/gc160x128/ili9163.c
-else ifeq "$(DISPLAY)" "S6D0144"
-  C_SOURCES += display/gc160x128/s6d0144.c
-else ifeq "$(DISPLAY)" "ST7735"
-  C_SOURCES += display/gc160x128/st7735.c
-else ifeq "$(DISPLAY)" "L2F50126"
-  C_SOURCES += display/gc176x132/l2f50126.c
-else ifeq "$(DISPLAY)" "LPH9157"
-  C_SOURCES += display/gc176x132/lph9157.c
-else ifeq "$(DISPLAY)" "LS020"
-  C_SOURCES += display/gc176x132/ls020.c
-else ifeq "$(DISPLAY)" "SSD1286A"
-  C_SOURCES += display/gc176x132/ssd1286a.c
-else ifeq "$(DISPLAY)" "HX8340"
-  C_SOURCES += display/gc220x176/hx8340.c
-else ifeq "$(DISPLAY)" "ILI9225"
-  C_SOURCES += display/gc220x176/ili9225.c
-else ifeq "$(DISPLAY)" "LGDP4524"
-  C_SOURCES += display/gc220x176/lgdp4524.c
-else ifeq "$(DISPLAY)" "S6D0164"
-  C_SOURCES += display/gc220x176/s6d0164.c
-else ifeq "$(DISPLAY)" "HX8347A"
-  C_SOURCES += display/gc320x240/hx8347a.c
-else ifeq "$(DISPLAY)" "HX8347D"
-  C_SOURCES += display/gc320x240/hx8347d.c
-else ifeq "$(DISPLAY)" "ILI9320"
-  C_SOURCES += display/gc320x240/ili9320.c
-else ifeq "$(DISPLAY)" "ILI9341"
-  C_SOURCES += display/gc320x240/ili9341.c
-else ifeq "$(DISPLAY)" "MC2PA8201"
-  C_SOURCES += display/gc320x240/mc2pa8201.c
-else ifeq "$(DISPLAY)" "S6D0129"
-  C_SOURCES += display/gc320x240/s6d0129.c
-else ifeq "$(DISPLAY)" "S6D0139"
-  C_SOURCES += display/gc320x240/s6d0139.c
-else ifeq "$(DISPLAY)" "SPFD5408"
-  C_SOURCES += display/gc320x240/spfd5408.c
-else ifeq "$(DISPLAY)" "SSD1289"
-  C_SOURCES += display/gc320x240/ssd1289.c
-else ifeq "$(DISPLAY)" "SSD2119"
-  C_SOURCES += display/gc320x240/ssd2119.c
-else ifeq "$(DISPLAY)" "ILI9327"
-  C_SOURCES += display/gc400x240/ili9327.c
-else ifeq "$(DISPLAY)" "S6D04D1"
-  C_SOURCES += display/gc400x240/s6d04d1.c
-else ifeq "$(DISPLAY)" "ST7793"
-  C_SOURCES += display/gc400x240/st7793.c
-else ifeq "$(DISPLAY)" "ILI9481"
-  C_SOURCES += display/gc480x320/ili9481.c
-else ifeq "$(DISPLAY)" "ILI9486"
-  C_SOURCES += display/gc480x320/ili9486.c
-else ifeq "$(DISPLAY)" "R61581"
-  C_SOURCES += display/gc480x320/r61581.c
+ifneq (,$(filter $(DISPLAY), \
+  ILI9163   \
+  S6D0144   \
+  ST7735    \
+))
+  DISPSIZE = 160x128
 endif
+
+ifneq (,$(filter $(DISPLAY), \
+  L2F50126  \
+  LPH9157   \
+  LS020     \
+  SSD1286A  \
+))
+  DISPSIZE = 176x132
+endif
+
+ifneq (,$(filter $(DISPLAY), \
+  HX8340    \
+  ILI9225   \
+  LGDP4524  \
+  S6D0164   \
+))
+  DISPSIZE = 220x176
+endif
+
+ifneq (,$(filter $(DISPLAY), \
+  HX8347A   \
+  HX8347D   \
+  ILI9320   \
+  ILI9341   \
+  MC2PA8201 \
+  S6D0129   \
+  S6D0139   \
+  SPFD5408  \
+  SSD1289   \
+  SSD2119   \
+))
+  DISPSIZE = 320x240
+endif
+
+ifneq (,$(filter $(DISPLAY), \
+  ILI9327   \
+  S6D04D1   \
+  ST7793    \
+))
+  DISPSIZE = 400x240
+endif
+
+ifneq (,$(filter $(DISPLAY), \
+  ILI9481   \
+  ILI9486   \
+  R61581    \
+))
+  DISPSIZE = 480x320
+endif
+
+C_SOURCES += display/gc$(DISPSIZE)/$(call lc,$(DISPLAY)).c
 C_SOURCES += display/dispdrv.c
 C_SOURCES += display/glcd.c
 C_DEFS += -D_$(DISPLAY)
 C_DEFS += -D_DISP_$(DISPVAR)
-C_DEFS += -D_DISP_READ_ENABLED
-C_DEFS += -D_DISP_RST_ENABLED
+C_DEFS += -D_DISP_$(DISPSIZE)
+
+C_SOURCES += \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c \
+  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c \
+  system/system_stm32f1xx.c
 
 C_INCLUDES = \
--Idrivers/STM32F1xx_HAL_Driver/Inc \
--Idrivers/CMSIS/Device/ST/STM32F1xx/Include \
--Idrivers/CMSIS/Include
+  -Idrivers/STM32F1xx_HAL_Driver/Inc \
+  -Idrivers/CMSIS/Device/ST/STM32F1xx/Include \
+  -Idrivers/CMSIS/Include
 
 AS_DEFS =
 
 ASM_SOURCES = \
-system/startup_stm32f103xb.s
+  system/startup_stm32f103xb.s
 
 # Build directory
 BUILD_DIR = build
