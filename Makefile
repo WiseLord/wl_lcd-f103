@@ -25,6 +25,7 @@ C_DEFS += -D_DISP_RST_ENABLED
 
 C_SOURCES = main.c
 
+C_SOURCES += mem.c
 C_SOURCES += pins.c
 C_SOURCES += usart.c
 

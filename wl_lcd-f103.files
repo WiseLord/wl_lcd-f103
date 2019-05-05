@@ -136,6 +136,8 @@ system/stm32f10x-openocd.cfg
 system/system_stm32f1xx.c
 
 main.c
+mem.c
+mem.h
 pins.c
 pins.h
 usart.c
