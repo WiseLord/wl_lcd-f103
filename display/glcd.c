@@ -3,8 +3,6 @@
 #include <string.h>
 #include "../mem.h"
 
-#define STR_BUFSIZE             64
-
 static Glcd glcd;
 static char strbuf[STR_BUFSIZE + 1];    // String buffer
 
@@ -130,6 +128,11 @@ GlcdRect glcdGetRect(void)
     return glcd.rect;
 }
 
+char *glcdGetStrBuf(void)
+{
+    return strbuf;
+}
+
 char *glcdPrepareNum(int32_t number, int8_t width, char lead, uint8_t radix)
 {
     uint8_t sign = lead;
@@ -186,6 +189,11 @@ void glcdSetFontBgColor(uint16_t color)
 void glcdSetFontAlign(uint8_t align)
 {
     glcd.font.align = align;
+}
+
+int16_t glcdGetFontHeight(const tFont *font)
+{
+    return font->chars->image->height;
 }
 
 void glcdSetXY(int16_t x, int16_t y)
@@ -458,8 +466,8 @@ void glcdDrawFrame(int16_t x, int16_t y, int16_t w, int16_t h, int16_t t, uint16
     glcdDrawRect(x + w - t, y, t, h - t, color);
 }
 
-void glcdDrawRoundedFrame(int16_t x, int16_t y, int16_t w, int16_t h, int16_t t, int16_t r,
-                          uint16_t color)
+void glcdDrawRoundedFrame(int16_t x, int16_t y, int16_t w, int16_t h,
+                          int16_t t, int16_t r, uint16_t color)
 {
     int16_t xc = x + r;
     int16_t yc = y + r;
