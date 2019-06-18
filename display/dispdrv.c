@@ -330,24 +330,8 @@ void dispdrvDrawPixel(int16_t x, int16_t y, uint16_t color)
     SET(DISP_CS);
 }
 
-void dispdrvDrawRectangle(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
+void dispdrvDrawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
-    int16_t xOft = x > 0 ? 0 : -x;
-
-    x += xOft;
-    w -= xOft;
-
-    if (x + w > dispdrv.width) {
-        w = dispdrv.width - x;
-    }
-    if (y + h > dispdrv.height) {
-        h = dispdrv.height - y;
-    }
-
-    if (w < 0 || h < 0) {
-        return;
-    }
-
     CLR(DISP_CS);
 
     dispdrv.setWindow(x, y, w, h);
