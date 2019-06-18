@@ -283,17 +283,46 @@ void glcdDrawImage(const tImage *img, uint16_t color, uint16_t bgColor)
         return;
     }
 
-    int16_t x = glcd.rect.x + glcd.x;
-    int16_t y = glcd.rect.y + glcd.y;
-
     uint8_t *unRleData = mem_malloc(4096);
-
     tImage *imgUnRle = glcdUnRleImg(img, unRleData);
-    dispdrvDrawImage(imgUnRle, x, y, color, bgColor);
+
+    GlcdRect *rect = &glcd.rect;
+
+    int16_t x = glcd.x;
+    int16_t y = glcd.y;
+
+    int16_t w = imgUnRle->width;
+    int16_t h = imgUnRle->height;
+
+    glcdSetX(x + w);
+
+    int16_t xOft = x > 0 ? 0 : -x;
+    int16_t yOft = y > 0 ? 0 : -y;
+
+    x += xOft;
+    w -= xOft;
+
+    y += yOft;
+    h -= yOft;
+
+    if (x + w > rect->w) {
+        w = rect->w - x;
+    }
+    if (y + h > rect->h) {
+        h = rect->h - y;
+    }
+
+    if (w < 0 || h < 0) {
+        return;
+    }
+
+    x += rect->x;
+    y += rect->y;
+
+    dispdrvDrawImage(imgUnRle, x, y, color, bgColor,
+                     xOft, yOft, w, h);
 
     mem_free(unRleData);
-
-    glcdSetX(glcd.x + img->width);
 }
 
 const tImage *glcdFindIcon(Icon code, const tFont *iFont)
@@ -435,22 +464,24 @@ uint16_t glcdWriteString(char *string)
     return ret;
 }
 
-void glcdDrawPixel(int16_t x, int16_t y, Color color)
+void glcdDrawPixel(int16_t x, int16_t y, uint16_t color)
 {
+    GlcdRect *rect = &glcd.rect;
+
     if (x < 0 || y < 0) {
         return;
     }
-    if (x >= glcd.rect.w || y >= glcd.rect.h) {
+    if (x >= rect->w || y >= rect->h) {
         return;
     }
 
-    x += glcd.rect.x;
-    y += glcd.rect.y;
+    x += rect->x;
+    y += rect->y;
 
     dispdrvDrawPixel(x, y, color);
 }
 
-void glcdDrawRect(int16_t x, int16_t y, int16_t w, int16_t h, Color color)
+void glcdDrawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
     GlcdRect *rect = &glcd.rect;
 
@@ -484,7 +515,7 @@ void glcdDrawRect(int16_t x, int16_t y, int16_t w, int16_t h, Color color)
     dispdrvDrawRect(x, y, w, h, color);
 }
 
-void glcdDrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, Color color)
+void glcdDrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color)
 {
     if (x0 == x1) {                 // Vertical
         if (y0 > y1) {              // Swap
@@ -525,7 +556,7 @@ void glcdDrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, Color color)
     }
 }
 
-void glcdDrawFrame(int16_t x, int16_t y, int16_t w, int16_t h, int16_t t, Color color)
+void glcdDrawFrame(int16_t x, int16_t y, int16_t w, int16_t h, int16_t t, uint16_t color)
 {
     glcdDrawRect(x, y, w - t, t, color);
     glcdDrawRect(x, y + t, t, h - t, color);
@@ -533,7 +564,7 @@ void glcdDrawFrame(int16_t x, int16_t y, int16_t w, int16_t h, int16_t t, Color 
     glcdDrawRect(x + w - t, y, t, h - t, color);
 }
 
-void glcdDrawRFrame(int16_t x, int16_t y, int16_t w, int16_t h, int16_t t, int16_t r, Color color)
+void glcdDrawRFrame(int16_t x, int16_t y, int16_t w, int16_t h, int16_t t, int16_t r, uint16_t color)
 {
     int16_t xc = x + r;
     int16_t yc = y + r;
@@ -584,7 +615,7 @@ void glcdDrawRFrame(int16_t x, int16_t y, int16_t w, int16_t h, int16_t t, int16
 }
 
 void glcdDrawCircle(int16_t xc, int16_t yc, int16_t r,
-                    Color color)
+                    uint16_t color)
 {
     int16_t f = 1 - r;
     int16_t ddF_x = 1;
@@ -611,7 +642,7 @@ void glcdDrawCircle(int16_t xc, int16_t yc, int16_t r,
     }
 }
 
-void glcdDrawRing(int16_t xc, int16_t yc, int16_t r, int16_t t, Color color)
+void glcdDrawRing(int16_t xc, int16_t yc, int16_t r, int16_t t, uint16_t color)
 {
     int16_t xo = r;
     int16_t xi = xo - t + 1;

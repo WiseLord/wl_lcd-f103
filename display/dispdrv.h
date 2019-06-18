@@ -42,7 +42,8 @@ void dispdrvReadReg(uint16_t reg, uint16_t *args, uint8_t nArgs);
 
 void dispdrvDrawPixel(int16_t x, int16_t y, uint16_t color);
 void dispdrvDrawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
-void dispdrvDrawImage(tImage *img, int16_t x, int16_t y, uint16_t color, uint16_t bgColor);
+void dispdrvDrawImage(tImage *img, int16_t x, int16_t y, uint16_t color, uint16_t bgColor,
+                      int16_t xOft, int16_t yOft, int16_t w, int16_t h);
 
 #ifdef __cplusplus
 }
