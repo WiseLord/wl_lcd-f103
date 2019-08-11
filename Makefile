@@ -34,6 +34,12 @@ C_SOURCES += $(wildcard display/fonts/font*.c)
 C_SOURCES += $(wildcard display/icons/icon*.c)
 
 ifneq (,$(filter $(DISPLAY), \
+  SSD1283A   \
+))
+  DISPSIZE = 130x130
+endif
+
+ifneq (,$(filter $(DISPLAY), \
   ILI9163   \
   S6D0144   \
   ST7735    \
