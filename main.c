@@ -10,6 +10,7 @@
 #include <stm32f1xx_ll_utils.h>
 #include "pins.h"
 #include "usart.h"
+#include "utils.h"
 
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0    ((uint32_t)0x00000007)
@@ -109,9 +110,7 @@ void printDispRegs(void)
             }
         }
 
-        char *str = glcdPrepareNum(reg, 2, '0', 16);
-        usartSendString(USART_DBG, str);
-        usartSendString(USART_DBG, ": ");
+        usartSendString(USART_DBG, utilMkStr("%02x: ", reg));
 
         if (!hasData) {
             usartSendString(USART_DBG, "\r");
@@ -120,12 +119,10 @@ void printDispRegs(void)
 
         for (uint8_t i = 0; i < num; i++) {
             if (args[i]) {
-                str = glcdPrepareNum(args[i], 4, '0', 16);
+                usartSendString(USART_DBG, utilMkStr("%04x ", args[i]));
             } else {
-                str = "----";
+                usartSendString(USART_DBG, "---- ");
             }
-            usartSendString(USART_DBG, str);
-            usartSendString(USART_DBG, " ");
         }
         usartSendString(USART_DBG, "\n\r");
     }

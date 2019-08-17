@@ -4,7 +4,6 @@
 #include "../mem.h"
 
 static Glcd glcd;
-static char strbuf[STR_BUFSIZE + 1];    // String buffer
 
 static tImage unRleImg = {
     .rle = 0
@@ -164,49 +163,6 @@ void glcdSetRect(const GlcdRect *rect)
 GlcdRect *glcdGetRect(void)
 {
     return &glcd.rect;
-}
-
-char *glcdGetStrBuf(void)
-{
-    return strbuf;
-}
-
-char *glcdPrepareNum(int32_t number, int8_t width, char lead, uint8_t radix)
-{
-    uint8_t sign = lead;
-    int8_t i;
-    int32_t num = number;
-
-    if (number < 0 && radix == 10) {
-        sign = '-';
-        num = -number;
-    }
-
-    for (i = 0; i < width; i++)
-        strbuf[i] = lead;
-    strbuf[width] = '\0';
-    i = width - 1;
-
-    while (num > 0 || i == width - 1) {
-        uint8_t numdiv = num % radix;
-        strbuf[i] = numdiv + 0x30;
-        if (numdiv >= 10)
-            strbuf[i] += 7;
-        i--;
-        num /= radix;
-    }
-
-    if (i >= 0)
-        strbuf[i] = sign;
-
-    return strbuf;
-}
-
-uint16_t glcdWriteNum(int32_t number, int8_t width, char lead, uint8_t radix)
-{
-    char *str = glcdPrepareNum(number, width, lead, radix);
-
-    return glcdWriteString(str);
 }
 
 void glcdSetFont(const tFont *font)
@@ -404,14 +360,7 @@ void glcdSetStringFramed(bool framed)
     glcd.strFramed = framed;
 }
 
-uint16_t glcdWriteStringConst(const char *string)
-{
-    strncpy(strbuf, string, STR_BUFSIZE);
-
-    return glcdWriteString(strbuf);
-}
-
-uint16_t glcdWriteString(char *string)
+uint16_t glcdWriteString(const char *string)
 {
     UChar code = 0;
     const char *str = string;

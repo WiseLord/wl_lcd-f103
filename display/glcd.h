@@ -30,9 +30,6 @@ typedef struct {
 } Glcd;
 
 typedef int32_t UChar;
-
-#define STR_BUFSIZE             64
-
 typedef uint16_t uint16_t;
 
 //Colors
@@ -78,10 +75,6 @@ void glcdShift(int16_t pos);
 void glcdSetRect(const GlcdRect *rect);
 GlcdRect *glcdGetRect(void);
 
-char *glcdGetStrBuf(void);
-char *glcdPrepareNum(int32_t number, int8_t width, char lead, uint8_t radix);
-uint16_t glcdWriteNum(int32_t number, int8_t width, char lead, uint8_t radix);
-
 void glcdSetFont(const tFont *font);
 void glcdSetFontColor(uint16_t color);
 void glcdSetFontBgColor(uint16_t color);
@@ -103,8 +96,8 @@ void glcdUStrToStr(const UChar *ustr, char *str);
 int16_t glcdWriteUChar(UChar code);
 
 void glcdSetStringFramed(bool framed);
-uint16_t glcdWriteStringConst(const char *string);
-uint16_t glcdWriteString(char *string);
+
+uint16_t glcdWriteString(const char *string);
 
 void glcdDrawPixel(int16_t x, int16_t y, uint16_t color);
 
