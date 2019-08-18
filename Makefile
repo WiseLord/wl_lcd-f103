@@ -32,7 +32,6 @@ C_SOURCES += utils.c
 
 # Display source files
 C_SOURCES += $(wildcard display/fonts/font*.c)
-C_SOURCES += $(wildcard display/icons/icon*.c)
 
 ifneq (,$(filter $(DISPLAY), \
   SSD1283A   \
@@ -105,6 +104,9 @@ C_DEFS += -D_$(DISPLAY)
 C_DEFS += -D_DISP_$(DISPVAR)
 C_DEFS += -D_DISP_$(DISPSIZE)
 
+C_INCLUDES += \
+  -Idisplay
+
 C_SOURCES += \
   drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c \
   drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c \
@@ -118,7 +120,7 @@ C_SOURCES += \
   drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c \
   system/system_stm32f1xx.c
 
-C_INCLUDES = \
+C_INCLUDES += \
   -Idrivers/STM32F1xx_HAL_Driver/Inc \
   -Idrivers/CMSIS/Device/ST/STM32F1xx/Include \
   -Idrivers/CMSIS/Include
