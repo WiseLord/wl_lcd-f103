@@ -51,7 +51,9 @@ static inline void dispdrvSendByte(uint8_t data)
 #if defined(_DISP_LO_BYTE) || defined(_DISP_16BIT)
     DISP_DATA_LO_Port->BSRR = 0x00FF0000 | data;
 #endif
+    __ASM volatile ("nop");
     CLR(DISP_WR);
+    __ASM volatile ("nop");
     SET(DISP_WR);
 #endif
 }
@@ -182,10 +184,10 @@ void dispdrvReset(void)
 
 #ifdef _DISP_RST_ENABLED
     CLR(DISP_RST);
-    LL_mDelay(50);
+    utilmDelay(50);
     SET(DISP_RST);
 #endif
-    LL_mDelay(50);
+    utilmDelay(50);
 }
 
 void dispdrvInit(void)
