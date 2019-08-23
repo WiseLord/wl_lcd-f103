@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 static char strbuf[256];    // String buffer
 
@@ -15,4 +16,26 @@ char *utilMkStr(const char *fmt, ...)
     va_end (args);
 
     return buffer;
+}
+
+bool utilReadChar(LineParse *lp, char ch)
+{
+    switch (ch) {
+    case '\n':
+    case '\r':
+        if (lp->idx == 0) {
+            break;
+        }
+        lp->line[lp->idx] = 0;
+        lp->idx = 0;
+        return true;
+    default:
+        lp->line[lp->idx++] = ch;
+        if (lp->idx >= LINE_SIZE) {
+            lp->line[--lp->idx] = 0;
+        }
+        break;
+    }
+
+    return false;
 }
