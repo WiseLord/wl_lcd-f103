@@ -1,8 +1,6 @@
 #include "usart.h"
 
-#include <stm32f1xx_ll_bus.h>
-#include <stm32f1xx_ll_gpio.h>
-#include <stm32f1xx_ll_usart.h>
+#include "hwlibs.h"
 
 #define TX_Pin LL_GPIO_PIN_9
 #define TX_GPIO_Port GPIOA

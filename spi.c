@@ -1,7 +1,6 @@
 #include "spi.h"
 
-#include <stm32f1xx_ll_bus.h>
-#include <stm32f1xx_ll_spi.h>
+#include "hwlibs.h"
 
 void spiInit(void *spi)
 {
