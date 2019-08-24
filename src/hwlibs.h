@@ -51,8 +51,8 @@ extern "C" {
 // Project-specific definitions
 #define USART_DBG               USART1
 
-#define LL_I2C1_SCL_PIN         LL_GPIO_PIN_8
-#define LL_I2C1_SDA_PIN         LL_GPIO_PIN_9
+#define LL_I2C1_SCL_PIN         LL_GPIO_PIN_6
+#define LL_I2C1_SDA_PIN         LL_GPIO_PIN_7
 
 #define I2C_MASTER              I2C1
 #define I2C_SLAVE               I2C2
