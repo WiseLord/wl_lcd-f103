@@ -5,6 +5,9 @@
 
 void pinsInit(void);
 
+#define IS_GPIO_HI(x)           ((x ## _Pin) & 0x00FF0000U)
+#define IS_GPIO_LO(x)           ((x ## _Pin) & 0x0000FF00U)
+
 #define CONCAT(x,y)             x ## y
 
 #define OUT(p)                  (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_OUTPUT))
