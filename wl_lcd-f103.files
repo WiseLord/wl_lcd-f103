@@ -136,6 +136,8 @@ mem.c
 mem.h
 pins.c
 pins.h
+spi.c
+spi.h
 usart.c
 usart.h
 utils.c
