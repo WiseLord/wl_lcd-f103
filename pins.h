@@ -5,8 +5,14 @@
 
 void pinsInit(void);
 
+#ifdef _STM32F1
 #define IS_GPIO_HI(x)           ((x ## _Pin) & 0x00FF0000U)
 #define IS_GPIO_LO(x)           ((x ## _Pin) & 0x0000FF00U)
+#endif
+#ifdef _STM32F3
+#define IS_GPIO_HI(x)           ((x ## _Pin) & 0x0000FF00U)
+#define IS_GPIO_LO(x)           ((x ## _Pin) & 0x000000FFU)
+#endif
 
 #define CONCAT(x,y)             x ## y
 
