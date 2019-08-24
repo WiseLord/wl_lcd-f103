@@ -39,8 +39,10 @@ static void pinsInitUsart(USART_TypeDef *USARTx)
 }
 
 
-void usartInit(USART_TypeDef *USARTx, uint32_t baudRate)
+void usartInit(void *usart, uint32_t baudRate)
 {
+    USART_TypeDef *USARTx = (USART_TypeDef *)usart;
+
     pinsInitUsart(USARTx);
 
     LL_USART_InitTypeDef USART_InitStruct = {0};
@@ -74,8 +76,10 @@ void usartInit(USART_TypeDef *USARTx, uint32_t baudRate)
     LL_USART_Enable(USARTx);
 }
 
-void usartSendChar(USART_TypeDef *USARTx, char ch)
+void usartSendChar(void *usart, char ch)
 {
+    USART_TypeDef *USARTx = (USART_TypeDef *)usart;
+
     while (!LL_USART_IsActiveFlag_TXE(USARTx)) {
         // TODO: timeout
     }
@@ -83,8 +87,10 @@ void usartSendChar(USART_TypeDef *USARTx, char ch)
     LL_USART_TransmitData8(USARTx, ch);
 }
 
-void usartSendString(USART_TypeDef *USARTx, char *str)
+void usartSendString(void *usart, char *str)
 {
+    USART_TypeDef *USARTx = (USART_TypeDef *)usart;
+
     while (*str) {
         usartSendChar(USARTx, *str++);
     }
