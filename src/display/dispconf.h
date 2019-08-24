@@ -30,26 +30,26 @@ extern "C" {
 #define DISP_DATA_Pin           0x00FF
 #endif
 
-#define DISP_CS_Port            GPIOB
-#define DISP_CS_Pin             (1<<12)
-#define DISP_RS_Port            GPIOB
-#define DISP_RS_Pin             (1<<14)
-#define DISP_WR_Port            GPIOB
-#define DISP_WR_Pin             (1<<15)
+#define DISP_CS_Port            GPIOC
+#define DISP_CS_Pin             (1<<9)
+#define DISP_RS_Port            GPIOC
+#define DISP_RS_Pin             (1<<8)
+#define DISP_WR_Port            GPIOC
+#define DISP_WR_Pin             (1<<10)
 
 #ifdef _DISP_READ_ENABLED
-#define DISP_RD_Port            GPIOB
+#define DISP_RD_Port            GPIOC
 #define DISP_RD_Pin             (1<<11)
 #endif
 
 #ifdef _DISP_RST_ENABLED
 #define DISP_RST_Port           GPIOB
-#define DISP_RST_Pin            (1<<10)
+#define DISP_RST_Pin            (1<<5)
 #endif
 
 #ifdef _DISP_BCKL_ENABLED
 #define DISP_BCKL_Port          GPIOC
-#define DISP_BCKL_Pin           (1<<13)
+#define DISP_BCKL_Pin           (1<<12)
 #endif
 
 #ifdef __cplusplus
