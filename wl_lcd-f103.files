@@ -127,8 +127,8 @@ drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usb.c
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c
 
 system/startup_stm32f103xb.s
-system/stm32f103c8tx_flash.ld
-system/stm32f10x-openocd.cfg
+system/stm32f103c8_flash.ld
+system/stm32f103xb_openocd.cfg
 system/system_stm32f1xx.c
 
 main.c

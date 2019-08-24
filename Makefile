@@ -6,9 +6,13 @@ DISPVAR = SPI
 # Lowercase argument
 lc = $(shell echo $1 | tr '[:upper:]' '[:lower:]')
 
+STM32_FAMILY = STM32F1
+STM32_GROUP  = $(STM32_FAMILY)03xB
+STM32_DEV    = $(STM32_FAMILY)03C8
+
 TARGET = $(call lc, $(PROJECT)_$(DISPLAY)_$(DISPVAR))
 
-C_DEFS = -DUSE_FULL_LL_DRIVER -DSTM32F103xB
+C_DEFS = -DUSE_FULL_LL_DRIVER -D$(STM32_GROUP)
 
 #C_DEFS += -D_DISP_READ_ENABLED
 #C_DEFS += -D_DISP_RST_ENABLED
@@ -99,27 +103,27 @@ C_INCLUDES += \
   -Idisplay
 
 C_SOURCES += \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c \
-  drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c \
-  system/system_stm32f1xx.c
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_dma.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_exti.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_gpio.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_pwr.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_rcc.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_rtc.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_spi.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_tim.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_usart.c \
+  drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_utils.c \
+  system/system_$(call lc, $(STM32_FAMILY))xx.c
 
 C_INCLUDES += \
-  -Idrivers/STM32F1xx_HAL_Driver/Inc \
-  -Idrivers/CMSIS/Device/ST/STM32F1xx/Include \
+  -Idrivers/$(STM32_FAMILY)xx_HAL_Driver/Inc \
+  -Idrivers/CMSIS/Device/ST/$(STM32_FAMILY)xx/Include \
   -Idrivers/CMSIS/Include
 
 AS_DEFS =
 
 ASM_SOURCES = \
-  system/startup_stm32f103xb.s
+  system/startup_$(call lc, $(STM32_GROUP)).s
 
 # Build directory
 BUILD_DIR = build
@@ -140,7 +144,7 @@ endif
 # Dependency information
 CFLAGS += -MMD -MP -MT $(BUILD_DIR)/$(*F).o -MF $(BUILD_DIR)/$(*D)/$(*F).d
 
-LDSCRIPT = system/stm32f103c8tx_flash.ld
+LDSCRIPT = system/$(call lc, $(STM32_DEV))_flash.ld
 LIBS = -lc -lm -lnosys
 LIBDIR =
 LDFLAGS = $(MCU) -specs=nosys.specs -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
@@ -155,7 +159,7 @@ AR = $(PREFIX)ar
 SZ = $(PREFIX)size
 
 OPENOCD := openocd
-OPENOCD_CFG := system/stm32f103cb_openocd.cfg
+OPENOCD_CFG := system/$(call lc, $(STM32_GROUP))_openocd.cfg
 
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
