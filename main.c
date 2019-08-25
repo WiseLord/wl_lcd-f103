@@ -91,7 +91,6 @@ void SysTick_Handler(void)
 
 void printDispRegs(void)
 {
-    usartSendString(USART_DBG, "\r========\r\n");
 #ifdef _DISP_READ_ENABLED
 
     const uint8_t num = 10;
@@ -141,6 +140,7 @@ int main(void)
     pinsInit();
 
     usartInit(USART_DBG, 115200);
+    usartSendString(USART_DBG, "\rUsart init done\r\n");
 //    printDispRegs();
 
     static Glcd *glcd;
