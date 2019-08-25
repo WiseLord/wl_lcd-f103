@@ -185,8 +185,8 @@ static inline void dispdrvSendColor(uint16_t data)
 void dispdrvReset(void)
 {
 #ifdef _DISP_SPI
+    spiInit(SPI_DISPLAY, false);
     SET(DISP_SPI_DC);
-    spiInit(SPI_DISPLAY);
 #else
 #ifdef _DISP_READ_ENABLED
     SET(DISP_RD);
