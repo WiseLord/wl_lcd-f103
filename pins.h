@@ -87,7 +87,15 @@ void pinsInit(void);
 #define DISP_SPI_SDI            DISP_WR
 #define DISP_SPI_SDO            DISP_RD
 
+// Main I2C bus
+#define AMP_I2C_Port            GPIOB
+#define AMP_I2C_SCK_Pin         LL_GPIO_PIN_8
+#define AMP_I2C_SDA_Pin         LL_GPIO_PIN_9
+
 // USART used for debugging
 #define USART_DBG               USART1
+
+// I2C used to KS0066/PCF8574
+#define I2C_KS0066              I2C1
 
 #endif // PINS_H

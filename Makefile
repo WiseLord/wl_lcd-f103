@@ -20,6 +20,7 @@ C_DEFS = -DUSE_FULL_LL_DRIVER -D$(STM32_GROUP) -D_$(STM32_FAMILY)
 C_SOURCES = main.c
 
 C_SOURCES += i2c.c
+C_SOURCES += ks0066.c
 C_SOURCES += mem.c
 C_SOURCES += pins.c
 C_SOURCES += spi.c

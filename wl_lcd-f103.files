@@ -140,6 +140,8 @@ system/system_stm32f3xx.c
 hwlibs.h
 i2c.c
 i2c.h
+ks0066.c
+ks0066.h
 main.c
 mem.c
 mem.h

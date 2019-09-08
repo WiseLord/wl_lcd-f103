@@ -1,5 +1,7 @@
 #include "display/glcd.h"
 #include "hwlibs.h"
+#include "i2c.h"
+#include "ks0066.h"
 #include "pins.h"
 #include "usart.h"
 #include "utils.h"
@@ -139,6 +141,15 @@ int main(void)
 
     pinsInit();
 
+#if DISP_DATA_HI_Pin == 0
+    i2cInit(I2C_KS0066, 100000);
+#endif
+
+    ks0066Init();
+
+    ks0066SetXY(0, 0);
+    ks0066WriteString("Color:");
+
     usartInit(USART_DBG, 115200);
     usartSendString(USART_DBG, "\rUsart init done\r\n");
 //    printDispRegs();
@@ -187,16 +198,28 @@ int main(void)
 
     while (1) {
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_RED);
+        ks0066SetXY(0, 1);
+        ks0066WriteString("Red    ");
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_YELLOW);
+        ks0066SetXY(0, 1);
+        ks0066WriteString("Yellow ");
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_LIME);
+        ks0066SetXY(0, 1);
+        ks0066WriteString("Lime   ");
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_AQUA);
+        ks0066SetXY(0, 1);
+        ks0066WriteString("Aqua   ");
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_BLUE);
+        ks0066SetXY(0, 1);
+        ks0066WriteString("Blue   ");
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_MAGENTA);
+        ks0066SetXY(0, 1);
+        ks0066WriteString("Magenta");
         LL_mDelay(500);
     }
 
