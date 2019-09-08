@@ -9,6 +9,7 @@ extern "C" {
 #include <stm32f1xx_ll_bus.h>
 #include <stm32f1xx_ll_cortex.h>
 #include <stm32f1xx_ll_gpio.h>
+#include <stm32f1xx_ll_i2c.h>
 #include <stm32f1xx_ll_rcc.h>
 #include <stm32f1xx_ll_spi.h>
 #include <stm32f1xx_ll_system.h>
@@ -20,6 +21,7 @@ extern "C" {
 #include <stm32f3xx_ll_bus.h>
 #include <stm32f3xx_ll_cortex.h>
 #include <stm32f3xx_ll_gpio.h>
+#include <stm32f3xx_ll_i2c.h>
 #include <stm32f3xx_ll_rcc.h>
 #include <stm32f3xx_ll_spi.h>
 #include <stm32f3xx_ll_system.h>

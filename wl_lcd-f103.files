@@ -98,12 +98,14 @@ drivers/CMSIS/Include/mpu_armv7.h
 drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_bus.h
 drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_cortex.h
 drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_gpio.h
+drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_i2c.h
 drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_rcc.h
 drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_spi.h
 drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_system.h
 drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usart.h
 drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_utils.h
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c
+drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_i2c.c
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c
@@ -112,6 +114,7 @@ drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c
 drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_bus.h
 drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_cortex.h
 drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_gpio.h
+drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_i2c.h
 drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_pwr.h
 drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_rcc.h
 drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_spi.h
@@ -119,6 +122,7 @@ drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_system.h
 drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_usart.h
 drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_utils.h
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_gpio.c
+drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_i2c.c
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_rcc.c
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_spi.c
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_usart.c
@@ -134,6 +138,8 @@ system/system_stm32f1xx.c
 system/system_stm32f3xx.c
 
 hwlibs.h
+i2c.c
+i2c.h
 main.c
 mem.c
 mem.h
