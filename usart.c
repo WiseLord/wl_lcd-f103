@@ -2,12 +2,6 @@
 
 #include "hwlibs.h"
 
-#define TX_Pin LL_GPIO_PIN_9
-#define TX_GPIO_Port GPIOA
-
-#define RX_Pin LL_GPIO_PIN_10
-#define RX_GPIO_Port GPIOA
-
 static void pinsInitUsart(USART_TypeDef *USARTx)
 {
     LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
