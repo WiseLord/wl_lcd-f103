@@ -186,16 +186,14 @@ void dispdrvReset(void)
 {
 #ifdef _DISP_SPI
     spiInit(SPI_DISPLAY, false);
-    SET(DISP_SPI_DC);
 #else
+    SET(DISP_CS);
 #ifdef _DISP_READ_ENABLED
     SET(DISP_RD);
 #endif
     SET(DISP_WR);
-    SET(DISP_RS);
-    SET(DISP_CS);
 #endif
-
+    SET(DISP_RS);
 #ifdef _DISP_RST_ENABLED
     CLR(DISP_RST);
     utilmDelay(50);

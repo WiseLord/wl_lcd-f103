@@ -74,7 +74,7 @@ static void ks0066WritePort(uint8_t data)
 #endif
 
 #if defined(KS0066_WIRE_PCF8574)
-    i2cTransmit(I2C_KS0066, true);
+    i2cTransmit(I2C_KS0066);
 #endif
 }
 
@@ -159,7 +159,7 @@ void ks0066Init(void)
     ks0066SetData(KS0066_FUNCTION);
     ks0066WriteStrob();
 #if defined(KS0066_WIRE_PCF8574)
-    i2cTransmit(I2C_KS0066, true);
+    i2cTransmit(I2C_KS0066);
 #endif
     ks0066WriteCommand(KS0066_FUNCTION | KS0066_2LINES);
 #endif

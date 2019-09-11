@@ -107,7 +107,6 @@ drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_utils.h
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_i2c.c
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c
-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c
 drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c
 
@@ -124,7 +123,6 @@ drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_utils.h
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_gpio.c
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_i2c.c
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_rcc.c
-drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_spi.c
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_usart.c
 drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_utils.c
 
