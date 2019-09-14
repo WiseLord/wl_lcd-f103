@@ -141,8 +141,10 @@ int main(void)
 
     pinsInit();
 
-#if DISP_DATA_HI_Pin == 0
+#ifndef _DISP_16BIT
+#if IS_GPIO_LO(DISP_DATA)
     i2cInit(I2C_KS0066, 100000);
+#endif
 #endif
 
     ks0066Init();

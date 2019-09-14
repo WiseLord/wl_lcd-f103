@@ -16,42 +16,9 @@ void pinsInit(void);
 
 #define CONCAT(x,y)             x ## y
 
-#define OUT(p)                  (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_OUTPUT))
-#define IN_F(p)                 (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_FLOATING))
-#define IN_P(p)                 (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_INPUT))
-#define ALT(p)                  (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_ALTERNATE))
 #define SET(p)                  (LL_GPIO_SetOutputPin(CONCAT(p, _Port), CONCAT(p, _Pin)))
 #define CLR(p)                  (LL_GPIO_ResetOutputPin(CONCAT(p, _Port), CONCAT(p, _Pin)))
 #define READ(p)                 (LL_GPIO_IsInputPinSet(CONCAT(p, _Port), CONCAT(p, _Pin)))
-
-#define SPEED(p, s)             (LL_GPIO_SetPinSpeed(CONCAT(p, _Port), CONCAT(p, _Pin), s))
-#define OTYPE(p, t)             (LL_GPIO_SetPinOutputType(CONCAT(p, _Port), CONCAT(p, _Pin), t))
-
-#define OUT_INIT(p, t, s)   \
-    do {                    \
-        OUT(p);             \
-        SPEED(p, s);        \
-        OTYPE(p, t);        \
-    } while (0);
-
-#define IN_U(p)             \
-    do {                    \
-        IN_P(p);            \
-        SET(p);             \
-    } while (0);
-
-#define IN_D(p)             \
-    do {                    \
-        IN_P(p);            \
-        CLR(p);             \
-    } while (0);
-
-#define ALT_INIT(p, t, s)   \
-    do {                    \
-        ALT(p);             \
-        SPEED(p, s);        \
-        OTYPE(p, t);        \
-    } while (0);
 
 #define LED1_Port               GPIOA
 #define LED1_Pin                LL_GPIO_PIN_2
@@ -76,16 +43,5 @@ void pinsInit(void);
 #define DISP_RST_Pin            LL_GPIO_PIN_11
 #define DISP_BCKL_Port          GPIOC
 #define DISP_BCKL_Pin           LL_GPIO_PIN_13
-
-// Main I2C bus
-#define AMP_I2C_Port            GPIOB
-#define AMP_I2C_SCK_Pin         LL_GPIO_PIN_8
-#define AMP_I2C_SDA_Pin         LL_GPIO_PIN_9
-
-// USART used for debugging
-#define USART_DBG               USART1
-
-// I2C used to KS0066/PCF8574
-#define I2C_KS0066              I2C1
 
 #endif // PINS_H

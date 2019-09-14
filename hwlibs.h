@@ -29,6 +29,9 @@ extern "C" {
 #include <stm32f3xx_ll_utils.h>
 #endif
 
+#define USART_DBG               USART1
+#define I2C_KS0066              I2C1
+
 #ifdef __cplusplus
 }
 #endif
