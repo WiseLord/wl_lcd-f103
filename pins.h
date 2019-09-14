@@ -59,12 +59,9 @@ void pinsInit(void);
 #define LED3_Pin                LL_GPIO_PIN_3
 
 // TFT LCD pins
-#define DISP_DATA_HI_Port       GPIOB
-#define DISP_DATA_HI_Pin        (0 * (LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 | LL_GPIO_PIN_11 | \
-                                 LL_GPIO_PIN_12 | LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15))
-#define DISP_DATA_LO_Port       GPIOB
-#define DISP_DATA_LO_Pin        (1 * (LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3 | \
-                                 LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7))
+#define DISP_DATA_Port          GPIOB
+#define DISP_DATA_Pin           (LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3 | \
+                                 LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7)
 
 // TFT parallel (8-bit) wiring
 #define DISP_CS_Port            GPIOB
@@ -74,18 +71,11 @@ void pinsInit(void);
 #define DISP_WR_Port            GPIOB
 #define DISP_WR_Pin             LL_GPIO_PIN_15
 #define DISP_RS_Port            GPIOB
-#define DISP_RS_Pin             LL_GPIO_PIN_14
+#define DISP_RS_Pin             LL_GPIO_PIN_14  // SPI DC
 #define DISP_RST_Port           GPIOB
 #define DISP_RST_Pin            LL_GPIO_PIN_11
 #define DISP_BCKL_Port          GPIOC
 #define DISP_BCKL_Pin           LL_GPIO_PIN_13
-
-// TFT serial (SPI 3 lines) wiring
-#define DISP_SPI_SCK_Port       GPIOB
-#define DISP_SPI_SCK_Pin        LL_GPIO_PIN_13
-#define DISP_SPI_DC             DISP_RS
-#define DISP_SPI_SDI            DISP_WR
-#define DISP_SPI_SDO            DISP_RD
 
 // Main I2C bus
 #define AMP_I2C_Port            GPIOB
