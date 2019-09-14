@@ -29,17 +29,19 @@ static inline void dispdrvSendByte(uint8_t data)
 }
 
 __attribute__((always_inline))
-static inline uint8_t  dispdrvReadInput(void)
+static inline uint8_t  dispdrvReadBus(void)
 {
-    uint8_t ret;
+    uint8_t ret = 0;
 
 #if defined(_DISP_16BIT)
     ret = (DISP_DATA_LO_Port->IDR & 0x00FF);
 #else
+#ifdef DISP_DATA_Port
 #if IS_GPIO_LO(DISP_DATA)
     ret = (DISP_DATA_Port->IDR & 0x00FF);
 #else
     ret = (DISP_DATA_Port->IDR & 0xFF00) >> 8;
+#endif
 #endif
 #endif
 
@@ -87,7 +89,7 @@ __attribute__((always_inline))
 static inline void dispdrvBusOut(void)
 {
     if (!busBusy) {
-        busData = dispdrvReadInput();
+        busData = dispdrvReadBus();
         busBusy = true;
     }
 #if defined(_DISP_16BIT)
@@ -108,7 +110,7 @@ static inline void dispdrvBusOut(void)
 #endif
 #ifdef _STM32F3
     DISP_DATA_Port->MODER &= 0xFFFF0000;
-    DISP_DATA_Port->MODER |= 0x55550000;
+    DISP_DATA_Port->MODER |= 0x00005555;
 #endif
 #endif
 #if IS_GPIO_HI(DISP_DATA)
@@ -235,7 +237,7 @@ uint8_t dispdrvGetBus(void)
 void dispdrvBusIRQ(void)
 {
     if (!busBusy) {
-        busData = dispdrvReadInput();
+        busData = dispdrvReadBus();
     }
 }
 
@@ -300,7 +302,7 @@ static inline uint8_t dispdrvReadByte(void)
 
     CLR(DISP_RD);
     dispdrvReadDelay();
-    ret = dispdrvReadInput();
+    ret = dispdrvReadBus();
     SET(DISP_RD);
 
     return ret;
