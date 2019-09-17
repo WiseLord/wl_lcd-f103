@@ -1,9 +1,14 @@
 #ifndef PINS_H
 #define PINS_H
 
-#include "hwlibs.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-void pinsInit(void);
+#include <stdbool.h>
+#include <stdint.h>
+
+#include "hwlibs.h"
 
 #ifdef _STM32F1
 #define IS_GPIO_HI(x)           ((x ## _Pin) & 0x00FF0000U)
@@ -16,6 +21,10 @@ void pinsInit(void);
 
 #define CONCAT(x,y)             x ## y
 
+#define OUT(p)                  (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_OUTPUT))
+#define IN_F(p)                 (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_FLOATING))
+#define IN_P(p)                 (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_INPUT))
+
 #define SET(p)                  (LL_GPIO_SetOutputPin(CONCAT(p, _Port), CONCAT(p, _Pin)))
 #define CLR(p)                  (LL_GPIO_ResetOutputPin(CONCAT(p, _Port), CONCAT(p, _Pin)))
 #ifdef _STM32F1
@@ -25,13 +34,8 @@ void pinsInit(void);
 #endif
 
 #define READ_BYTE(p)            (IS_GPIO_LO(p) ? (READ(p) & 0x00FF) : (READ(p) & 0xFF00) >> 8)
-
 #define WRITE_BYTE(p, data)     (CONCAT(p, _Port)->BSRR = (IS_GPIO_LO(p) ? (0x00FF0000U | (uint32_t)data) : (0xFF000000U | (uint32_t)(data << 8))))
 
-#define LED1_Port               GPIOA
-#define LED1_Pin                LL_GPIO_PIN_2
-#define LED3_Port               GPIOA
-#define LED3_Pin                LL_GPIO_PIN_3
 
 // TFT LCD pins
 #define DISP_DATA_Port          GPIOB
@@ -51,5 +55,16 @@ void pinsInit(void);
 #define DISP_RST_Pin            LL_GPIO_PIN_11
 #define DISP_BCKL_Port          GPIOC
 #define DISP_BCKL_Pin           LL_GPIO_PIN_13
+
+#define LED1_Port               GPIOA
+#define LED1_Pin                LL_GPIO_PIN_2
+#define LED3_Port               GPIOA
+#define LED3_Pin                LL_GPIO_PIN_3
+
+void pinsInit(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // PINS_H
