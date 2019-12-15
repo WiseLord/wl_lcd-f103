@@ -40,6 +40,8 @@ static void pinsInitDisplay(void)
     initDef.Pin = DISP_WR_Pin;
     LL_GPIO_Init(DISP_WR_Port, &initDef);
 #endif
+
+    SET(DISP_BCKL);
 }
 
 void pinsInit(void)

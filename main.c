@@ -166,9 +166,9 @@ int main(void)
 
     glcdDrawRect(0, 0, w, h, LCD_COLOR_BLACK);
 
-    if (w >= 240) {
+    if (h >= 240) {
         glcdSetFont(&fontterminus32);
-    } else if (w >= 176) {
+    } else if (h >= 176) {
         glcdSetFont(&fontterminus24);
     } else {
         glcdSetFont(&fontterminus16);
@@ -177,14 +177,17 @@ int main(void)
     glcdSetFontColor(LCD_COLOR_RED);
     glcdSetXY(0, h / 16 * 2);
     glcdWriteString("Red line");
+    glcdUpdate();
 
     glcdSetFontColor(LCD_COLOR_LIME);
     glcdSetXY(0, h / 16 * 7);
     glcdWriteString("Green line");
+    glcdUpdate();
 
     glcdSetFontColor(LCD_COLOR_BLUE);
     glcdSetXY(0, h / 16 * 12);
     glcdWriteString("Blue line");
+    glcdUpdate();
 
     int16_t tw = w / 16;
     int16_t th = h / 4;
@@ -197,31 +200,38 @@ int main(void)
     int16_t ry = h / 4 * 1;
     int16_t rr = ry - 8;
     glcdDrawRing(rx, ry, ry - 2, 3, LCD_COLOR_WHITE);
+    glcdUpdate();
 
     while (1) {
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_RED);
         ks0066SetXY(0, 1);
         ks0066WriteString("Red    ");
+        glcdUpdate();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_YELLOW);
         ks0066SetXY(0, 1);
         ks0066WriteString("Yellow ");
+        glcdUpdate();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_LIME);
         ks0066SetXY(0, 1);
         ks0066WriteString("Lime   ");
+        glcdUpdate();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_AQUA);
         ks0066SetXY(0, 1);
         ks0066WriteString("Aqua   ");
+        glcdUpdate();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_BLUE);
         ks0066SetXY(0, 1);
         ks0066WriteString("Blue   ");
+        glcdUpdate();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_MAGENTA);
         ks0066SetXY(0, 1);
         ks0066WriteString("Magenta");
+        glcdUpdate();
         LL_mDelay(500);
     }
 
