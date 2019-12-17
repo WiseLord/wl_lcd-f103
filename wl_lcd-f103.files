@@ -125,8 +125,6 @@ i2c.h
 ks0066.c
 ks0066.h
 main.c
-mem.c
-mem.h
 pins.c
 pins.h
 spi.c
