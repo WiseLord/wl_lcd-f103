@@ -246,7 +246,8 @@ void glcdDrawImage(const tImage *img, color_t color, color_t bgColor)
         h = rect->h - y;
     }
 
-    if (w < 0 || h < 0) {
+    if (w <= 0 || h <= 0) {
+        free(unRleData);
         return;
     }
 
@@ -320,6 +321,10 @@ void glcdSetStringFramed(bool framed)
 
 uint16_t glcdWriteString(const char *string)
 {
+    if (string == NULL) {
+        return 0;
+    }
+
     UChar code = 0;
     const char *str = string;
     uint16_t ret = 0;
