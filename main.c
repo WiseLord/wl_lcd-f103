@@ -16,7 +16,7 @@
 
 void LL_Init(void)
 {
-#ifdef _STM32F1
+#ifdef STM32F1
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
 #endif
     LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
@@ -62,7 +62,7 @@ void SystemClock_Config(void)
     LL_Init1msTick(72000000);
     LL_SYSTICK_SetClkSource(LL_SYSTICK_CLKSOURCE_HCLK);
     LL_SetSystemCoreClock(72000000);
-#ifdef _STM32F3
+#ifdef STM32F3
     LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_SYSCLK);
     LL_RCC_SetUSARTClockSource(LL_RCC_USART2_CLKSOURCE_SYSCLK);
     LL_RCC_SetUSARTClockSource(LL_RCC_USART3_CLKSOURCE_SYSCLK);
@@ -177,17 +177,17 @@ int main(void)
     glcdSetFontColor(LCD_COLOR_RED);
     glcdSetXY(0, h / 16 * 2);
     glcdWriteString("Red line");
-    glcdUpdate();
+    glcdFbSync();
 
     glcdSetFontColor(LCD_COLOR_LIME);
     glcdSetXY(0, h / 16 * 7);
     glcdWriteString("Green line");
-    glcdUpdate();
+    glcdFbSync();
 
     glcdSetFontColor(LCD_COLOR_BLUE);
     glcdSetXY(0, h / 16 * 12);
     glcdWriteString("Blue line");
-    glcdUpdate();
+    glcdFbSync();
 
     int16_t tw = w / 16;
     int16_t th = h / 4;
@@ -200,38 +200,38 @@ int main(void)
     int16_t ry = h / 4 * 1;
     int16_t rr = ry - 8;
     glcdDrawRing(rx, ry, ry - 2, 3, LCD_COLOR_WHITE);
-    glcdUpdate();
+    glcdFbSync();
 
     while (1) {
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_RED);
         ks0066SetXY(0, 1);
         ks0066WriteString("Red    ");
-        glcdUpdate();
+        glcdFbSync();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_YELLOW);
         ks0066SetXY(0, 1);
         ks0066WriteString("Yellow ");
-        glcdUpdate();
+        glcdFbSync();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_LIME);
         ks0066SetXY(0, 1);
         ks0066WriteString("Lime   ");
-        glcdUpdate();
+        glcdFbSync();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_AQUA);
         ks0066SetXY(0, 1);
         ks0066WriteString("Aqua   ");
-        glcdUpdate();
+        glcdFbSync();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_BLUE);
         ks0066SetXY(0, 1);
         ks0066WriteString("Blue   ");
-        glcdUpdate();
+        glcdFbSync();
         LL_mDelay(500);
         glcdDrawCircle(rx, ry, rr, LCD_COLOR_MAGENTA);
         ks0066SetXY(0, 1);
         ks0066WriteString("Magenta");
-        glcdUpdate();
+        glcdFbSync();
         LL_mDelay(500);
     }
 

@@ -8,7 +8,7 @@ static void pinsInitDisplay(void)
     initDef.Mode = LL_GPIO_MODE_OUTPUT;
     initDef.Speed = LL_GPIO_SPEED_FREQ_HIGH;
     initDef.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-#ifdef _STM32F3
+#ifdef STM32F3
     initDef.Pull = LL_GPIO_PULL_NO;
 #endif
 
@@ -46,17 +46,17 @@ static void pinsInitDisplay(void)
 
 void pinsInit(void)
 {
-#ifdef _STM32F1
+#ifdef STM32F1
     LL_GPIO_AF_Remap_SWJ_NOJTAG();
 #endif
 
     // Enable clock for all GPIO peripherials
-#ifdef _STM32F1
+#ifdef STM32F1
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
 #endif
-#ifdef _STM32F3
+#ifdef STM32F3
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
@@ -67,7 +67,7 @@ void pinsInit(void)
     initDef.Mode = LL_GPIO_MODE_OUTPUT;
     initDef.Speed = LL_GPIO_SPEED_FREQ_HIGH;
     initDef.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-#ifdef _STM32F3
+#ifdef STM32F3
     initDef.Pull = LL_GPIO_PULL_NO;
 #endif
 
