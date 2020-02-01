@@ -112,7 +112,17 @@ ifneq (,$(filter $(DISPLAY), \
   DISPSIZE = 480x320
 endif
 
-C_SOURCES += display/gc$(DISPSIZE)/$(call lc,$(DISPLAY)).c
+DISPTYPE = gc
+
+ifneq (,$(filter $(DISPLAY), \
+  SSD1322   \
+))
+  DISPTYPE = gg
+  DISPSIZE = 256x64
+  C_DEFS += -D_DISP_FB
+endif
+
+C_SOURCES += display/$(DISPTYPE)$(DISPSIZE)/$(call lc,$(DISPLAY)).c
 C_SOURCES += display/dispdrv.c
 C_SOURCES += display/glcd.c
 C_DEFS += -D_$(DISPLAY)
