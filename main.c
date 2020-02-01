@@ -164,7 +164,7 @@ int main(void)
     int16_t w = glcd->drv->width;
     int16_t h = glcd->drv->height;
 
-    glcdDrawRect(0, 0, w, h, LCD_COLOR_BLACK);
+    glcdDrawRect(0, 0, w, h, COLOR_BLACK);
 
     if (h >= 240) {
         glcdSetFont(&fontterminus32);
@@ -174,17 +174,17 @@ int main(void)
         glcdSetFont(&fontterminus16);
     }
 
-    glcdSetFontColor(LCD_COLOR_RED);
+    glcdSetFontColor(COLOR_RED);
     glcdSetXY(0, h / 16 * 2);
     glcdWriteString("Red line");
     glcdFbSync();
 
-    glcdSetFontColor(LCD_COLOR_LIME);
+    glcdSetFontColor(COLOR_LIME);
     glcdSetXY(0, h / 16 * 7);
     glcdWriteString("Green line");
     glcdFbSync();
 
-    glcdSetFontColor(LCD_COLOR_BLUE);
+    glcdSetFontColor(COLOR_BLUE);
     glcdSetXY(0, h / 16 * 12);
     glcdWriteString("Blue line");
     glcdFbSync();
@@ -192,43 +192,43 @@ int main(void)
     int16_t tw = w / 16;
     int16_t th = h / 4;
 
-    glcdDrawRect(w / 2 + tw * 1, h / 8 * 5, tw / 4 * 6, th, LCD_COLOR_RED);
-    glcdDrawRect(w / 2 + tw * 3, h / 8 * 5, tw / 4 * 6, th, LCD_COLOR_LIME);
-    glcdDrawRect(w / 2 + tw * 5, h / 8 * 5, tw / 4 * 6, th, LCD_COLOR_BLUE);
+    glcdDrawRect(w / 2 + tw * 1, h / 8 * 5, tw / 4 * 6, th, COLOR_RED);
+    glcdDrawRect(w / 2 + tw * 3, h / 8 * 5, tw / 4 * 6, th, COLOR_LIME);
+    glcdDrawRect(w / 2 + tw * 5, h / 8 * 5, tw / 4 * 6, th, COLOR_BLUE);
 
     int16_t rx = w / 4 * 3;
     int16_t ry = h / 4 * 1;
     int16_t rr = ry - 8;
-    glcdDrawRing(rx, ry, ry - 2, 3, LCD_COLOR_WHITE);
+    glcdDrawRing(rx, ry, ry - 2, 3, COLOR_WHITE);
     glcdFbSync();
 
     while (1) {
-        glcdDrawCircle(rx, ry, rr, LCD_COLOR_RED);
+        glcdDrawCircle(rx, ry, rr, COLOR_RED);
         ks0066SetXY(0, 1);
         ks0066WriteString("Red    ");
         glcdFbSync();
         LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, LCD_COLOR_YELLOW);
+        glcdDrawCircle(rx, ry, rr, COLOR_YELLOW);
         ks0066SetXY(0, 1);
         ks0066WriteString("Yellow ");
         glcdFbSync();
         LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, LCD_COLOR_LIME);
+        glcdDrawCircle(rx, ry, rr, COLOR_LIME);
         ks0066SetXY(0, 1);
         ks0066WriteString("Lime   ");
         glcdFbSync();
         LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, LCD_COLOR_AQUA);
+        glcdDrawCircle(rx, ry, rr, COLOR_AQUA);
         ks0066SetXY(0, 1);
         ks0066WriteString("Aqua   ");
         glcdFbSync();
         LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, LCD_COLOR_BLUE);
+        glcdDrawCircle(rx, ry, rr, COLOR_BLUE);
         ks0066SetXY(0, 1);
         ks0066WriteString("Blue   ");
         glcdFbSync();
         LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, LCD_COLOR_MAGENTA);
+        glcdDrawCircle(rx, ry, rr, COLOR_MAGENTA);
         ks0066SetXY(0, 1);
         ks0066WriteString("Magenta");
         glcdFbSync();

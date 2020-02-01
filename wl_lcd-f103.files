@@ -61,6 +61,7 @@ display/gc480x320/rm68140.c
 display/gg256x64/ssd1322.c
 display/gg256x64/ssd1322.h
 
+display/colors.h
 display/dispdrv.c
 display/dispdrv.h
 display/glcd.c
