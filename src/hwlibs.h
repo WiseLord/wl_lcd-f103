@@ -32,6 +32,13 @@ extern "C" {
 #endif
 
 #define USART_DBG               USART1
+
+#define LL_I2C1_SCL_PIN         LL_GPIO_PIN_8
+#define LL_I2C1_SDA_PIN         LL_GPIO_PIN_9
+
+#define I2C_MASTER              I2C1
+#define I2C_SLAVE               I2C2
+
 #define I2C_KS0066              I2C1
 
 #ifdef __cplusplus

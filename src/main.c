@@ -6,6 +6,9 @@
 #include "usart.h"
 #include "utils.h"
 
+#include <ctype.h>
+#include <string.h>
+
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0    ((uint32_t)0x00000007)
 #define NVIC_PRIORITYGROUP_1    ((uint32_t)0x00000006)
@@ -132,6 +135,35 @@ void printDispRegs(void)
 #endif
 }
 
+typedef struct {
+    color_t color;
+    char *name;
+} ColorNames;
+
+static ColorNames cn[] = {
+    {COLOR_WHITE,   "White"},
+    {COLOR_RED,     "Red"},
+    {COLOR_YELLOW,  "Yellow"},
+    {COLOR_LIME,    "Lime"},
+    {COLOR_AQUA,    "Aqua"},
+    {COLOR_BLUE,    "Blue"},
+    {COLOR_MAGENTA, "Magenta"},
+};
+
+static uint8_t rxBuf[32];
+static uint8_t resBuf[32];
+
+static Glcd *glcd;
+
+void rx_cb(void)
+{
+    memcpy(resBuf, rxBuf, 32);
+
+    for (size_t i = 0; i < 32; i++) {
+        resBuf[i] = toupper(resBuf[i]);
+    }
+}
+
 int main(void)
 {
     // System
@@ -143,7 +175,8 @@ int main(void)
 
 #ifndef _DISP_16BIT
 #if IS_GPIO_LO(DISP_DATA)
-    i2cInit(I2C_KS0066, 100000);
+    i2cInit(I2C_MASTER, 100000);
+    i2cInit(I2C_SLAVE, 100000);
 #endif
 #endif
 
@@ -154,11 +187,9 @@ int main(void)
 
     usartInit(USART_DBG, 115200);
     usartSendString(USART_DBG, "\rUsart init done\r\n");
-//    printDispRegs();
+    printDispRegs();
 
-    static Glcd *glcd;
     glcdInit(&glcd);
-//    glcdRotate(LCD_ROTATE_180);
 
     // Graphics
     int16_t w = glcd->drv->width;
@@ -174,21 +205,6 @@ int main(void)
         glcdSetFont(&fontterminus16);
     }
 
-    glcdSetFontColor(COLOR_RED);
-    glcdSetXY(0, h / 16 * 2);
-    glcdWriteString("Red line");
-    glcdFbSync();
-
-    glcdSetFontColor(COLOR_LIME);
-    glcdSetXY(0, h / 16 * 7);
-    glcdWriteString("Green line");
-    glcdFbSync();
-
-    glcdSetFontColor(COLOR_BLUE);
-    glcdSetXY(0, h / 16 * 12);
-    glcdWriteString("Blue line");
-    glcdFbSync();
-
     int16_t tw = w / 16;
     int16_t th = h / 4;
 
@@ -202,36 +218,45 @@ int main(void)
     glcdDrawRing(rx, ry, ry - 2, 3, COLOR_WHITE);
     glcdFbSync();
 
+    static char txBuf[8];
+
+    i2cSetRxCb(I2C_SLAVE, rx_cb);
+
+    i2cBegin(I2C_SLAVE, 0x28);
+    i2cSlaveTransmitReceive(I2C_SLAVE, rxBuf, sizeof(rxBuf));
+
     while (1) {
-        glcdDrawCircle(rx, ry, rr, COLOR_RED);
+        static size_t it = 0;
+        if (++it >= sizeof(cn) / sizeof (cn[0])) {
+            it = 0;
+        }
+
+        memcpy(txBuf, cn[it].name, 8);
+
+        i2cBegin(I2C_MASTER, 0x28);
+        for (size_t i = 0; i <= strlen(txBuf); i++) {
+            i2cSend(I2C_MASTER, txBuf[i]);
+        }
+        i2cTransmit(I2C_MASTER);
+
+        glcdDrawCircle(rx, ry, rr, cn[it].color);
+
+        glcdSetFontColor(cn[it].color);
+        glcdSetXY(0, h / 16 * 2);
+        glcdWriteString(utilMkStr("Iteration: %d ", it));
+
+        glcdSetXY(0, h / 16 * 7);
+        glcdWriteString(utilMkStr("Tx: %-8s", txBuf));
+
+        glcdSetXY(0, h / 16 * 12);
+        glcdWriteString(utilMkStr("Rx: %-8s", resBuf));
+
         ks0066SetXY(0, 1);
-        ks0066WriteString("Red    ");
+        ks0066WriteString(utilMkStr("%-8s", cn[it].name));
+
+        usartSendString(USART_DBG, utilMkStr("Color: %s\r\n", cn[it].name));
         glcdFbSync();
-        LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, COLOR_YELLOW);
-        ks0066SetXY(0, 1);
-        ks0066WriteString("Yellow ");
-        glcdFbSync();
-        LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, COLOR_LIME);
-        ks0066SetXY(0, 1);
-        ks0066WriteString("Lime   ");
-        glcdFbSync();
-        LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, COLOR_AQUA);
-        ks0066SetXY(0, 1);
-        ks0066WriteString("Aqua   ");
-        glcdFbSync();
-        LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, COLOR_BLUE);
-        ks0066SetXY(0, 1);
-        ks0066WriteString("Blue   ");
-        glcdFbSync();
-        LL_mDelay(500);
-        glcdDrawCircle(rx, ry, rr, COLOR_MAGENTA);
-        ks0066SetXY(0, 1);
-        ks0066WriteString("Magenta");
-        glcdFbSync();
+
         LL_mDelay(500);
     }
 
