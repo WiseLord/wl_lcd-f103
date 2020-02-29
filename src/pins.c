@@ -44,6 +44,20 @@ static void pinsInitDisplay(void)
     SET(DISP_BCKL);
 }
 
+static void pinsInitButtons(void)
+{
+    LL_GPIO_InitTypeDef GPIO_InitStructf;
+
+    GPIO_InitStructf.Mode = LL_GPIO_MODE_INPUT;
+    GPIO_InitStructf.Pull = LL_GPIO_PULL_UP;
+
+    GPIO_InitStructf.Pin = BTN_0_Pin;
+    LL_GPIO_Init(BTN_0_Port, &GPIO_InitStructf);
+
+    GPIO_InitStructf.Pin = BTN_1_Pin;
+    LL_GPIO_Init(BTN_1_Port, &GPIO_InitStructf);
+}
+
 void pinsInit(void)
 {
 #ifdef STM32F1
@@ -77,4 +91,6 @@ void pinsInit(void)
     LL_GPIO_Init(LED1_Port, &initDef);
 
     pinsInitDisplay();
+
+    pinsInitButtons();
 }

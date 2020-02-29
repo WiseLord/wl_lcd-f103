@@ -3,6 +3,7 @@
 #include "i2c.h"
 #include "ks0066.h"
 #include "pins.h"
+#include "pt6311.h"
 #include "usart.h"
 #include "utils.h"
 
@@ -191,6 +192,8 @@ int main(void)
     usartSendString(USART_DBG, "\rUsart init done\r\n");
     printDispRegs();
 
+    pt6311Init();
+
     glcdInit(&glcd);
 
     // Graphics
@@ -228,6 +231,9 @@ int main(void)
     i2cSlaveTransmitReceive(I2C_SLAVE, rxBuf, sizeof(rxBuf));
 
     while (1) {
+        static uint8_t seg = PT6311_SEG_NUM;
+        static uint8_t dig = PT6311_DIG_NUM;
+
         static size_t it = 0;
         if (++it >= sizeof(cn) / sizeof (cn[0])) {
             it = 0;
@@ -244,14 +250,20 @@ int main(void)
         glcdDrawCircle(rx, ry, rr, cn[it].color);
 
         glcdSetFontColor(cn[it].color);
-        glcdSetXY(0, h / 16 * 2);
+        glcdSetXY(0, h / 16 * 1);
         glcdWriteString(utilMkStr("Iteration: %d ", it));
 
-        glcdSetXY(0, h / 16 * 7);
+        glcdSetXY(0, h / 16 * 5);
         glcdWriteString(utilMkStr("Tx: %-8s", txBuf));
 
-        glcdSetXY(0, h / 16 * 12);
+        glcdSetXY(0, h / 16 * 9);
         glcdWriteString(utilMkStr("Rx: %-8s", resBuf));
+
+        glcdSetXY(0, h / 16 * 13);
+        glcdWriteString("S: ");
+        glcdWriteString(seg == PT6311_SEG_NUM ? "All " : utilMkStr("%2d, ", seg));
+        glcdWriteString(" D: ");
+        glcdWriteString(dig == PT6311_DIG_NUM ? "All " : utilMkStr("%d ", dig));
 
         ks0066SetXY(0, 1);
         ks0066WriteString(utilMkStr("%-8s", cn[it].name));
@@ -259,7 +271,29 @@ int main(void)
         usartSendString(USART_DBG, utilMkStr("Color: %s\r\n", cn[it].name));
         glcdFbSync();
 
-        LL_mDelay(500);
+        for (uint8_t d = 0; d < PT6311_DIG_NUM; d++) {
+            if (d == dig || dig == PT6311_DIG_NUM) {
+                pt6311SetDigit(d, seg == PT6311_SEG_NUM ? 0x0FFFFF : 1 << seg);
+            } else {
+                pt6311SetDigit(d, 0);
+            }
+        }
+
+        pt6311UpdateScreen();
+
+        LL_mDelay(200);
+
+        while (READ(BTN_0) && READ(BTN_1));
+        if (!READ(BTN_0)) {
+            if (++seg > PT6311_SEG_NUM) {
+                seg = 0;
+            }
+        }
+        if (!READ(BTN_1)) {
+            if (++dig > PT6311_DIG_NUM) {
+                dig = 0;
+            }
+        }
     }
 
     return 0;

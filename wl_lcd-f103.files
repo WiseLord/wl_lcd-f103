@@ -106,6 +106,8 @@ src/main.c
 src/Makefile
 src/pins.c
 src/pins.h
+src/pt6311.c
+src/pt6311.h
 src/spi.c
 src/spi.h
 src/system/startup_stm32f103xb.s

@@ -22,11 +22,11 @@ extern "C" {
 #define CONCAT(x,y)             x ## y
 
 #define OUT(p)                  (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_OUTPUT))
-#define IN_F(p)                 (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_FLOATING))
-#define IN_P(p)                 (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_INPUT))
+#define IN(p)                   (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_INPUT))
 
 #define SET(p)                  (LL_GPIO_SetOutputPin(CONCAT(p, _Port), CONCAT(p, _Pin)))
 #define CLR(p)                  (LL_GPIO_ResetOutputPin(CONCAT(p, _Port), CONCAT(p, _Pin)))
+#define TOG(p)                  (LL_GPIO_TogglePin(CONCAT(p, _Port), CONCAT(p, _Pin)))
 #ifdef STM32F1
 #define READ(p)                 (LL_GPIO_ReadInputPort(CONCAT(p, _Port)) & (CONCAT(p, _Pin) >> GPIO_PIN_MASK_POS) & 0x0000FFFFU)
 #else
@@ -60,6 +60,18 @@ extern "C" {
 #define LED1_Pin                LL_GPIO_PIN_2
 #define LED3_Port               GPIOA
 #define LED3_Pin                LL_GPIO_PIN_3
+
+#define PT6311_STB_Port         GPIOA
+#define PT6311_STB_Pin          LL_GPIO_PIN_4
+#define PT6311_DAT_Port         GPIOA
+#define PT6311_DAT_Pin          LL_GPIO_PIN_7
+#define PT6311_CLK_Port         GPIOA
+#define PT6311_CLK_Pin          LL_GPIO_PIN_6
+
+#define BTN_0_Port              GPIOB
+#define BTN_0_Pin               LL_GPIO_PIN_0
+#define BTN_1_Port              GPIOB
+#define BTN_1_Pin               LL_GPIO_PIN_1
 
 void pinsInit(void);
 
