@@ -16,7 +16,11 @@ typedef struct {
     int32_t idx;
 } LineParse;
 
-void utilmDelay(uint32_t delay);
+void utilInit(void);
+
+void utilmDelay(uint32_t ms);
+void utiluDelay(uint32_t us);
+void utilnDelay(uint32_t ns);
 
 char *utilMkStr(const char *fmt, ...);
 

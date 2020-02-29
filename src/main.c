@@ -171,6 +171,8 @@ int main(void)
     SystemClock_Config();
     LL_SYSTICK_EnableIT();
 
+    utilInit();
+
     pinsInit();
 
 #ifndef _DISP_16BIT
