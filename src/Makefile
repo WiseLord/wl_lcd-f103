@@ -40,6 +40,7 @@ C_SOURCES += main.c
 
 C_SOURCES += i2c.c
 C_SOURCES += ks0066.c
+C_SOURCES += mn14032.c
 C_SOURCES += pins.c
 C_SOURCES += pt6311.c
 C_SOURCES += spi.c

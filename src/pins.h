@@ -73,6 +73,17 @@ extern "C" {
 #define BTN_1_Port              GPIOB
 #define BTN_1_Pin               LL_GPIO_PIN_1
 
+#define MN14032_SIN_Port        GPIOA
+#define MN14032_SIN_Pin         LL_GPIO_PIN_4  // yellow
+#define MN14032_CLK_Port        GPIOA
+#define MN14032_CLK_Pin         LL_GPIO_PIN_3  // green
+#define MN14032_LAT_Port        GPIOA
+#define MN14032_LAT_Pin         LL_GPIO_PIN_2  // blue
+#define MN14032_BLK_Port        GPIOA
+#define MN14032_BLK_Pin         LL_GPIO_PIN_1  // purple
+#define MN14032_GCP_Port        GPIOA
+#define MN14032_GCP_Pin         LL_GPIO_PIN_0  // gray
+
 void pinsInit(void);
 
 #ifdef __cplusplus

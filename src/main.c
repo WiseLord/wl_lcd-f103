@@ -2,6 +2,7 @@
 #include "hwlibs.h"
 #include "i2c.h"
 #include "ks0066.h"
+#include "mn14032.h"
 #include "pins.h"
 #include "pt6311.h"
 #include "usart.h"
@@ -78,21 +79,21 @@ void SystemClock_Config(void)
 
 void SysTick_Handler(void)
 {
-    static uint16_t tick = 0;
+//    static uint16_t tick = 0;
 
-    if (++tick >= 200)
-        tick = 0;
+//    if (++tick >= 200)
+//        tick = 0;
 
-    switch (tick) {
-    case 0:
-        CLR(LED1);
-        SET(LED3);
-        break;
-    case 100:
-        CLR(LED3);
-        SET(LED1);
-        break;
-    }
+//    switch (tick) {
+//    case 0:
+//        CLR(LED1);
+//        SET(LED3);
+//        break;
+//    case 100:
+//        CLR(LED3);
+//        SET(LED1);
+//        break;
+//    }
 }
 
 void printDispRegs(void)
@@ -141,29 +142,29 @@ typedef struct {
     char *name;
 } ColorNames;
 
-static ColorNames cn[] = {
-    {COLOR_WHITE,   "White"},
-    {COLOR_RED,     "Red"},
-    {COLOR_YELLOW,  "Yellow"},
-    {COLOR_LIME,    "Lime"},
-    {COLOR_AQUA,    "Aqua"},
-    {COLOR_BLUE,    "Blue"},
-    {COLOR_MAGENTA, "Magenta"},
-};
+//static ColorNames cn[] = {
+//    {COLOR_WHITE,   "White"},
+//    {COLOR_RED,     "Red"},
+//    {COLOR_YELLOW,  "Yellow"},
+//    {COLOR_LIME,    "Lime"},
+//    {COLOR_AQUA,    "Aqua"},
+//    {COLOR_BLUE,    "Blue"},
+//    {COLOR_MAGENTA, "Magenta"},
+//};
 
-static uint8_t rxBuf[32];
-static uint8_t resBuf[32];
+//static uint8_t rxBuf[32];
+//static uint8_t resBuf[32];
 
-static Glcd *glcd;
+//static Glcd *glcd;
 
-void rx_cb(void)
-{
-    memcpy(resBuf, rxBuf, 32);
+//void rx_cb(void)
+//{
+//    memcpy(resBuf, rxBuf, 32);
 
-    for (size_t i = 0; i < 32; i++) {
-        resBuf[i] = toupper(resBuf[i]);
-    }
-}
+//    for (size_t i = 0; i < 32; i++) {
+//        resBuf[i] = toupper(resBuf[i]);
+//    }
+//}
 
 int main(void)
 {
@@ -183,117 +184,119 @@ int main(void)
 #endif
 #endif
 
-    ks0066Init();
+//    ks0066Init();
 
-    ks0066SetXY(0, 0);
-    ks0066WriteString("Color:");
+//    ks0066SetXY(0, 0);
+//    ks0066WriteString("Color:");
 
-    usartInit(USART_DBG, 115200);
-    usartSendString(USART_DBG, "\rUsart init done\r\n");
-    printDispRegs();
+//    usartInit(USART_DBG, 115200);
+//    usartSendString(USART_DBG, "\rUsart init done\r\n");
+//    printDispRegs();
 
-    pt6311Init();
+//    pt6311Init();
+    mn14032Init();
 
-    glcdInit(&glcd);
+//    glcdInit(&glcd);
 
-    // Graphics
-    int16_t w = glcd->drv->width;
-    int16_t h = glcd->drv->height;
+//    // Graphics
+//    int16_t w = glcd->drv->width;
+//    int16_t h = glcd->drv->height;
 
-    glcdDrawRect(0, 0, w, h, COLOR_BLACK);
+//    glcdDrawRect(0, 0, w, h, COLOR_BLACK);
 
-    if (h >= 240) {
-        glcdSetFont(&fontterminus32);
-    } else if (h >= 176) {
-        glcdSetFont(&fontterminus24);
-    } else {
-        glcdSetFont(&fontterminus16);
-    }
+//    if (h >= 240) {
+//        glcdSetFont(&fontterminus32);
+//    } else if (h >= 176) {
+//        glcdSetFont(&fontterminus24);
+//    } else {
+//        glcdSetFont(&fontterminus16);
+//    }
 
-    int16_t tw = w / 16;
-    int16_t th = h / 4;
+//    int16_t tw = w / 16;
+//    int16_t th = h / 4;
 
-    glcdDrawRect(w / 2 + tw * 1, h / 8 * 5, tw / 4 * 6, th, COLOR_RED);
-    glcdDrawRect(w / 2 + tw * 3, h / 8 * 5, tw / 4 * 6, th, COLOR_LIME);
-    glcdDrawRect(w / 2 + tw * 5, h / 8 * 5, tw / 4 * 6, th, COLOR_BLUE);
+//    glcdDrawRect(w / 2 + tw * 1, h / 8 * 5, tw / 4 * 6, th, COLOR_RED);
+//    glcdDrawRect(w / 2 + tw * 3, h / 8 * 5, tw / 4 * 6, th, COLOR_LIME);
+//    glcdDrawRect(w / 2 + tw * 5, h / 8 * 5, tw / 4 * 6, th, COLOR_BLUE);
 
-    int16_t rx = w / 4 * 3;
-    int16_t ry = h / 4 * 1;
-    int16_t rr = ry - 8;
-    glcdDrawRing(rx, ry, ry - 2, 3, COLOR_WHITE);
-    glcdFbSync();
+//    int16_t rx = w / 4 * 3;
+//    int16_t ry = h / 4 * 1;
+//    int16_t rr = ry - 8;
+//    glcdDrawRing(rx, ry, ry - 2, 3, COLOR_WHITE);
+//    glcdFbSync();
 
-    static char txBuf[8];
+//    static char txBuf[8];
 
-    i2cSetRxCb(I2C_SLAVE, rx_cb);
+//    i2cSetRxCb(I2C_SLAVE, rx_cb);
 
-    i2cBegin(I2C_SLAVE, 0x28);
-    i2cSlaveTransmitReceive(I2C_SLAVE, rxBuf, sizeof(rxBuf));
+//    i2cBegin(I2C_SLAVE, 0x28);
+//    i2cSlaveTransmitReceive(I2C_SLAVE, rxBuf, sizeof(rxBuf));
 
     while (1) {
-        static uint8_t seg = PT6311_SEG_NUM;
-        static uint8_t dig = PT6311_DIG_NUM;
+//        static uint8_t seg = PT6311_SEG_NUM;
+//        static uint8_t dig = PT6311_DIG_NUM;
 
-        static size_t it = 0;
-        if (++it >= sizeof(cn) / sizeof (cn[0])) {
-            it = 0;
-        }
+//        static size_t it = 0;
+//        if (++it >= sizeof(cn) / sizeof (cn[0])) {
+//            it = 0;
+//        }
 
-        memcpy(txBuf, cn[it].name, 8);
+//        memcpy(txBuf, cn[it].name, 8);
 
-        i2cBegin(I2C_MASTER, 0x28);
-        for (size_t i = 0; i <= strlen(txBuf); i++) {
-            i2cSend(I2C_MASTER, txBuf[i]);
-        }
-        i2cTransmit(I2C_MASTER);
+//        i2cBegin(I2C_MASTER, 0x28);
+//        for (size_t i = 0; i <= strlen(txBuf); i++) {
+//            i2cSend(I2C_MASTER, txBuf[i]);
+//        }
+//        i2cTransmit(I2C_MASTER);
 
-        glcdDrawCircle(rx, ry, rr, cn[it].color);
+//        glcdDrawCircle(rx, ry, rr, cn[it].color);
 
-        glcdSetFontColor(cn[it].color);
-        glcdSetXY(0, h / 16 * 1);
-        glcdWriteString(utilMkStr("Iteration: %d ", it));
+//        glcdSetFontColor(cn[it].color);
+//        glcdSetXY(0, h / 16 * 1);
+//        glcdWriteString(utilMkStr("Iteration: %d ", it));
 
-        glcdSetXY(0, h / 16 * 5);
-        glcdWriteString(utilMkStr("Tx: %-8s", txBuf));
+//        glcdSetXY(0, h / 16 * 5);
+//        glcdWriteString(utilMkStr("Tx: %-8s", txBuf));
 
-        glcdSetXY(0, h / 16 * 9);
-        glcdWriteString(utilMkStr("Rx: %-8s", resBuf));
+//        glcdSetXY(0, h / 16 * 9);
+//        glcdWriteString(utilMkStr("Rx: %-8s", resBuf));
 
-        glcdSetXY(0, h / 16 * 13);
-        glcdWriteString("S: ");
-        glcdWriteString(seg == PT6311_SEG_NUM ? "All " : utilMkStr("%2d, ", seg));
-        glcdWriteString(" D: ");
-        glcdWriteString(dig == PT6311_DIG_NUM ? "All " : utilMkStr("%d ", dig));
+//        glcdSetXY(0, h / 16 * 13);
+//        glcdWriteString("S: ");
+//        glcdWriteString(seg == PT6311_SEG_NUM ? "All " : utilMkStr("%2d, ", seg));
+//        glcdWriteString(" D: ");
+//        glcdWriteString(dig == PT6311_DIG_NUM ? "All " : utilMkStr("%d ", dig));
 
-        ks0066SetXY(0, 1);
-        ks0066WriteString(utilMkStr("%-8s", cn[it].name));
+//        ks0066SetXY(0, 1);
+//        ks0066WriteString(utilMkStr("%-8s", cn[it].name));
 
-        usartSendString(USART_DBG, utilMkStr("Color: %s\r\n", cn[it].name));
-        glcdFbSync();
+//        usartSendString(USART_DBG, utilMkStr("Color: %s\r\n", cn[it].name));
+//        glcdFbSync();
 
-        for (uint8_t d = 0; d < PT6311_DIG_NUM; d++) {
-            if (d == dig || dig == PT6311_DIG_NUM) {
-                pt6311SetDigit(d, seg == PT6311_SEG_NUM ? 0x0FFFFF : 1 << seg);
-            } else {
-                pt6311SetDigit(d, 0);
-            }
-        }
+//        for (uint8_t d = 0; d < PT6311_DIG_NUM; d++) {
+//            if (d == dig || dig == PT6311_DIG_NUM) {
+//                pt6311SetDigit(d, seg == PT6311_SEG_NUM ? 0x0FFFFF : 1 << seg);
+//            } else {
+//                pt6311SetDigit(d, 0);
+//            }
+//        }
 
-        pt6311UpdateScreen();
+//        pt6311UpdateScreen();
+        mn14032Test();
 
-        LL_mDelay(200);
+//        LL_mDelay(200);
 
-        while (READ(BTN_0) && READ(BTN_1));
-        if (!READ(BTN_0)) {
-            if (++seg > PT6311_SEG_NUM) {
-                seg = 0;
-            }
-        }
-        if (!READ(BTN_1)) {
-            if (++dig > PT6311_DIG_NUM) {
-                dig = 0;
-            }
-        }
+//        while (READ(BTN_0) && READ(BTN_1));
+//        if (!READ(BTN_0)) {
+//            if (++seg > PT6311_SEG_NUM) {
+//                seg = 0;
+//            }
+//        }
+//        if (!READ(BTN_1)) {
+//            if (++dig > PT6311_DIG_NUM) {
+//                dig = 0;
+//            }
+//        }
     }
 
     return 0;

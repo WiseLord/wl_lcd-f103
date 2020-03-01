@@ -104,6 +104,8 @@ src/ks0066.c
 src/ks0066.h
 src/main.c
 src/Makefile
+src/mn14032.c
+src/mn14032.h
 src/pins.c
 src/pins.h
 src/pt6311.c
