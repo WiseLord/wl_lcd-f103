@@ -187,11 +187,11 @@ int main(void)
     usartSendString(USART_DBG, "\rUsart init done\r\n");
     printDispRegs();
 
-    glcdInit();
+    glcdInit(GLCD_LANDSCAPE);
 
     // Graphics
-    int16_t w = glcdGet()->drv->width;
-    int16_t h = glcdGet()->drv->height;
+    int16_t w = glcdGet()->rect.w;
+    int16_t h = glcdGet()->rect.h;
 
     glcdDrawRect(0, 0, w, h, COLOR_BLACK);
 
