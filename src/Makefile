@@ -129,7 +129,8 @@ C_DEFS += -D_$(DISPLAY)
 C_DEFS += -D_DISP_$(DISPVAR)
 
 C_INCLUDES += \
-  -Idisplay
+  -Idisplay/fonts \
+  -I.
 
 C_SOURCES += \
   drivers/$(STM32_FAMILY)xx_HAL_Driver/Src/$(call lc, $(STM32_FAMILY))xx_ll_gpio.c \

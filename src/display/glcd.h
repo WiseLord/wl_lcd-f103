@@ -19,11 +19,12 @@ typedef struct {
     int16_t h;
 } GlcdRect;
 
-typedef enum {
+typedef uint8_t GlcdAlign;
+enum {
     GLCD_ALIGN_LEFT,
     GLCD_ALIGN_CENTER,
     GLCD_ALIGN_RIGHT
-} GlcdAlign;
+};
 
 typedef struct {
     const DispDriver *drv;
@@ -33,14 +34,14 @@ typedef struct {
     int16_t y;
     color_t fontFg;
     color_t fontBg;
-    uint8_t fontAlign;
+    GlcdAlign fontAlign;
     bool rotate;
     bool strFramed;
 } Glcd;
 
 typedef int32_t UChar;
 
-void glcdInit(Glcd **value);
+void glcdInit(void);
 
 Glcd *glcdGet(void);
 
@@ -55,7 +56,7 @@ GlcdRect *glcdGetRect(void);
 void glcdSetFont(const tFont *font);
 void glcdSetFontColor(color_t color);
 void glcdSetFontBgColor(color_t color);
-void glcdSetFontAlign(uint8_t align);
+void glcdSetFontAlign(GlcdAlign align);
 int16_t glcdGetFontHeight(const tFont *font);
 
 void glcdSetXY(int16_t x, int16_t y);
@@ -70,10 +71,12 @@ void glcdDrawImage(const tImage *img, color_t color, color_t bgColor);
 uint16_t glcdStrToUStr(const char *str, UChar *ustr);
 void glcdUStrToStr(const UChar *ustr, char *str);
 int16_t glcdWriteUChar(UChar code);
+int16_t glcdCalcUCharLen(UChar code);
 
 void glcdSetStringFramed(bool framed);
 
-uint16_t glcdWriteString(const char *string);
+int16_t glcdWriteString(const char *string);
+int16_t glcdCalcStringLen(const char *string);
 
 void glcdDrawPixel(int16_t x, int16_t y, color_t color);
 

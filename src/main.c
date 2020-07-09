@@ -153,8 +153,6 @@ static ColorNames cn[] = {
 static uint8_t rxBuf[32];
 static uint8_t resBuf[32];
 
-static Glcd *glcd;
-
 void rx_cb(void)
 {
     memcpy(resBuf, rxBuf, 32);
@@ -189,11 +187,11 @@ int main(void)
     usartSendString(USART_DBG, "\rUsart init done\r\n");
     printDispRegs();
 
-    glcdInit(&glcd);
+    glcdInit();
 
     // Graphics
-    int16_t w = glcd->drv->width;
-    int16_t h = glcd->drv->height;
+    int16_t w = glcdGet()->drv->width;
+    int16_t h = glcdGet()->drv->height;
 
     glcdDrawRect(0, 0, w, h, COLOR_BLACK);
 
