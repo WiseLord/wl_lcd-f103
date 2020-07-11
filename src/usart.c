@@ -44,15 +44,15 @@ void usartInit(void *usart, uint32_t baudRate)
     // Peripheral clock enable and interrupt init
     if (USARTx == USART1) {
         LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
-        NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+        NVIC_SetPriority(USART1_IRQn, 0);
         NVIC_EnableIRQ(USART1_IRQn);
     } else if (USARTx == USART2) {
         LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
-        NVIC_SetPriority(USART2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+        NVIC_SetPriority(USART2_IRQn, 0);
         NVIC_EnableIRQ(USART2_IRQn);
     } else if (USARTx == USART3) {
         LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART3);
-        NVIC_SetPriority(USART3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+        NVIC_SetPriority(USART3_IRQn, 0);
         NVIC_EnableIRQ(USART3_IRQn);
     }
 
@@ -98,7 +98,7 @@ void usartSendChar(void *usart, char ch)
     LL_USART_TransmitData8(USARTx, ch);
 }
 
-void usartSendString(void *usart, char *str)
+void usartSendString(void *usart, const char *str)
 {
     USART_TypeDef *USARTx = (USART_TypeDef *)usart;
 

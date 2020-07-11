@@ -14,15 +14,22 @@ extern "C" {
 #define I2C_WRITE       0
 #define I2C_READ        1
 
+#ifndef I2C1_BUF_SIZE
 #define I2C1_BUF_SIZE   32
+#endif
+#ifndef I2C2_BUF_SIZE
 #define I2C2_BUF_SIZE   32
+#endif
 
-uint8_t i2cInit(void *i2c, uint32_t ClockSpeed);
+typedef void (*I2cRxFn)(int16_t rxBytes);
+typedef void (*I2cTxFn)(int16_t txBytes);
+
+uint8_t i2cInit(void *i2c, uint32_t ClockSpeed, uint8_t ownAddr);
 uint8_t i2cDeInit(void *i2c);
 bool i2cIsEnabled(void *i2c);
 
-void i2cSetRxCb(void *i2c, void (*cb)(void));
-void i2cSetTxCb(void *i2c, void (*cb)(void));
+void i2cSetRxCb(void *i2c, I2cRxFn cb);
+void i2cSetTxCb(void *i2c, I2cTxFn cb);
 
 void i2cBegin(void *i2c, uint8_t addr);
 void i2cSend(void *i2c, uint8_t data);

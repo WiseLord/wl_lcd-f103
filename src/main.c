@@ -7,6 +7,7 @@
 #include "utils.h"
 
 #include <ctype.h>
+#include <stdio.h>
 #include <string.h>
 
 #ifndef NVIC_PRIORITYGROUP_0
@@ -101,6 +102,7 @@ void printDispRegs(void)
     const uint8_t num = 10;
 
     uint16_t args[num];
+    char buf[8];
 
     for (uint16_t reg = 0x00; reg <= 0xFF; reg++) {
         dispdrvReset();
@@ -114,7 +116,8 @@ void printDispRegs(void)
             }
         }
 
-        usartSendString(USART_DBG, utilMkStr("%02x: ", reg));
+        snprintf(buf, sizeof(buf), "%02x: ", reg);
+        usartSendString(USART_DBG, buf);
 
         if (!hasData) {
             usartSendString(USART_DBG, "\r");
@@ -123,7 +126,8 @@ void printDispRegs(void)
 
         for (uint8_t i = 0; i < num; i++) {
             if (args[i]) {
-                usartSendString(USART_DBG, utilMkStr("%04x ", args[i]));
+                snprintf(buf, sizeof(buf), "%04x ", args[i]);
+                usartSendString(USART_DBG, buf);
             } else {
                 usartSendString(USART_DBG, "---- ");
             }
@@ -153,11 +157,15 @@ static ColorNames cn[] = {
 static uint8_t rxBuf[32];
 static uint8_t resBuf[32];
 
-void rx_cb(void)
+void rx_cb(int16_t bytes)
 {
-    memcpy(resBuf, rxBuf, 32);
+    if (bytes > 32) {
+        bytes = 32;
+    }
 
-    for (size_t i = 0; i < 32; i++) {
+    memcpy(resBuf, rxBuf, bytes);
+
+    for (int16_t i = 0; i < bytes; i++) {
         resBuf[i] = toupper(resBuf[i]);
     }
 }
@@ -173,8 +181,8 @@ int main(void)
 
 #ifndef _DISP_16BIT
 #if IS_GPIO_LO(DISP_DATA)
-    i2cInit(I2C_MASTER, 100000);
-    i2cInit(I2C_SLAVE, 100000);
+    i2cInit(I2C_MASTER, 100000, 0);
+    i2cInit(I2C_SLAVE, 100000, 0x28);
 #endif
 #endif
 
@@ -239,20 +247,27 @@ int main(void)
 
         glcdDrawCircle(rx, ry, rr, cn[it].color);
 
+        char buf[32];
+
         glcdSetFontColor(cn[it].color);
         glcdSetXY(0, h / 16 * 2);
-        glcdWriteString(utilMkStr("Iteration: %d ", it));
+        snprintf(buf, sizeof(buf), "Iteration: %d ", it);
+        glcdWriteString(buf);
 
         glcdSetXY(0, h / 16 * 7);
-        glcdWriteString(utilMkStr("Tx: %-8s", txBuf));
+        snprintf(buf, sizeof(buf), "Tx: %-8s", txBuf);
+        glcdWriteString(buf);
 
         glcdSetXY(0, h / 16 * 12);
-        glcdWriteString(utilMkStr("Rx: %-8s", resBuf));
+        snprintf(buf, sizeof(buf), "Rx: %-8s", resBuf);
+        glcdWriteString(buf);
 
         ks0066SetXY(0, 1);
-        ks0066WriteString(utilMkStr("%-8s", cn[it].name));
+        snprintf(buf, sizeof(buf), "%-8s", cn[it].name);
+        ks0066WriteString(buf);
 
-        usartSendString(USART_DBG, utilMkStr("Color: %s\r\n", cn[it].name));
+        snprintf(buf, sizeof(buf), "Color: %s\r\n", cn[it].name);
+        usartSendString(USART_DBG, buf);
         glcdFbSync();
 
         LL_mDelay(500);

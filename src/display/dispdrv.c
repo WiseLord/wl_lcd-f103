@@ -85,6 +85,8 @@ static inline uint8_t  dispdrvReadBus(void)
     return ret;
 }
 
+#ifndef _DISP_SPI
+
 __attribute__((always_inline))
 static inline void dispdrvBusIn(void)
 {
@@ -160,6 +162,8 @@ static inline void dispdrvBusOut(void)
 #endif
 #endif
 }
+
+#endif // _DISP_SPI
 
 __attribute__((always_inline))
 static inline void dispdrvSendWord(uint16_t data)
@@ -349,12 +353,18 @@ void dispdrvWriteReg16(uint16_t reg, uint16_t data)
     dispdrvSendWord(data);
 }
 
+#ifdef DISP_RD_Port
+
 __attribute__((always_inline))
 static inline void dispdrvReadDelay(void)
 {
     volatile uint32_t ticks = 50;
     while (ticks--);
 }
+
+#endif // DISP_RD_Port
+
+#ifdef _DISP_8BIT
 
 __attribute__((always_inline))
 static inline uint8_t dispdrvReadByte(void)
@@ -370,6 +380,8 @@ static inline uint8_t dispdrvReadByte(void)
 
     return ret;
 }
+
+#endif // _DISP_8BIT
 
 uint16_t dispdrvReadData16(void)
 {
