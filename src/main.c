@@ -185,7 +185,7 @@ int main(void)
 
     usartInit(USART_DBG, 115200);
     usartSendString(USART_DBG, "\rUsart init done\r\n");
-    printDispRegs();
+//    printDispRegs();
 
     glcdInit(GLCD_LANDSCAPE);
 
