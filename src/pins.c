@@ -12,16 +12,6 @@ static void pinsInitDisplay(void)
     initDef.Pull = LL_GPIO_PULL_NO;
 #endif
 
-#if defined(_DISP_16BIT)
-    initDef.Pin = DISP_DATA_LO_Pin;
-    LL_GPIO_Init(DISP_DATA_LO_Port, &initDef);
-    initDef.Pin = DISP_DATA_HI_Pin;
-    LL_GPIO_Init(DISP_DATA_HI_Port, &initDef);
-#elif defined (_DISP_8BIT)
-    initDef.Pin = DISP_DATA_Pin;
-    LL_GPIO_Init(DISP_DATA_Port, &initDef);
-#endif
-
     initDef.Pin = DISP_BCKL_Pin;
     LL_GPIO_Init(DISP_BCKL_Port, &initDef);
 

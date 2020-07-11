@@ -273,6 +273,16 @@ static void dispdrvInitPins(void)
     initDef.Pin = DISP_RD_Pin;
     LL_GPIO_Init(DISP_RD_Port, &initDef);
 #endif
+
+#if defined(_DISP_16BIT)
+    initDef.Pin = DISP_DATA_LO_Pin;
+    LL_GPIO_Init(DISP_DATA_LO_Port, &initDef);
+    initDef.Pin = DISP_DATA_HI_Pin;
+    LL_GPIO_Init(DISP_DATA_HI_Port, &initDef);
+#elif defined (_DISP_8BIT)
+    initDef.Pin = DISP_DATA_Pin;
+    LL_GPIO_Init(DISP_DATA_Port, &initDef);
+#endif
 }
 
 void dispdrvInit(void)
