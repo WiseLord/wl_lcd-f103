@@ -1,4 +1,5 @@
 #include "display/glcd.h"
+#include "display/font7seg.h"
 #include "hwlibs.h"
 #include "i2c.h"
 #include "ks0066.h"
@@ -210,6 +211,7 @@ int main(void)
     } else {
         glcdSetFont(&fontterminus16);
     }
+    font7segLoad(font_7seg_4);
 
     int16_t tw = w / 16;
     int16_t th = h / 4;
@@ -227,15 +229,18 @@ int main(void)
     static char txBuf[8];
 
     i2cSetRxCb(I2C_SLAVE, rx_cb);
-
     i2cBegin(I2C_SLAVE, 0x28);
-    i2cSlaveTransmitReceive(I2C_SLAVE, rxBuf, sizeof(rxBuf));
+
+    char buf[32];
 
     while (1) {
         static size_t it = 0;
         if (++it >= sizeof(cn) / sizeof (cn[0])) {
             it = 0;
         }
+
+        static uint16_t cnt = 0;
+        cnt++;
 
         memcpy(txBuf, cn[it].name, 8);
 
@@ -247,18 +252,25 @@ int main(void)
 
         glcdDrawCircle(rx, ry, rr, cn[it].color);
 
-        char buf[32];
+        glcdSetFontColor(COLOR_WHITE);
+        glcdSetFontBgColor(COLOR_NERO);
+
+        glcdSetXY(2, h / 16 * 1);
+        snprintf(buf, sizeof(buf), "%2d.%03d", cnt / 1000, cnt % 1000);
+        font7segWriteString(buf);
 
         glcdSetFontColor(cn[it].color);
-        glcdSetXY(0, h / 16 * 2);
+        glcdSetFontBgColor(COLOR_BLACK);
+
+        glcdSetXY(2, h / 16 * 5);
         snprintf(buf, sizeof(buf), "Iteration: %d ", it);
         glcdWriteString(buf);
 
-        glcdSetXY(0, h / 16 * 7);
+        glcdSetXY(2, h / 16 * 9);
         snprintf(buf, sizeof(buf), "Tx: %-8s", txBuf);
         glcdWriteString(buf);
 
-        glcdSetXY(0, h / 16 * 12);
+        glcdSetXY(2, h / 16 * 13);
         snprintf(buf, sizeof(buf), "Rx: %-8s", resBuf);
         glcdWriteString(buf);
 

@@ -124,6 +124,7 @@ endif
 
 C_SOURCES += display/$(DISPTYPE)$(DISPSIZE)/$(call lc,$(DISPLAY)).c
 C_SOURCES += display/dispdrv.c
+C_SOURCES += display/font7seg.c
 C_SOURCES += display/glcd.c
 C_DEFS += -D_$(DISPLAY)
 C_DEFS += -D_DISP_$(DISPVAR)

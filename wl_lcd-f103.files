@@ -2,6 +2,8 @@ src/.astylerc
 src/display/colors.h
 src/display/dispdrv.c
 src/display/dispdrv.h
+src/display/font7seg.c
+src/display/font7seg.h
 src/display/fonts/font-amp-08.c
 src/display/fonts/fonts.h
 src/display/fonts/font-terminus-12.c
