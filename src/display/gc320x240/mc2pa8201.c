@@ -44,10 +44,26 @@ void mc2pa8201Init(void)
 //    dispdrvSendData8(0x24);
 
     dispdrvSelectReg8(0x36);
-    dispdrvSendData8(0x80);
+    dispdrvSendData8(0x20); // 0x80 for vertical layout
 
     dispdrvSelectReg8(0x29);
 
+    SET(DISP_CS);
+}
+
+void mc2pa8201Rotate(bool rotate)
+{
+    CLR(DISP_CS);
+
+    dispdrvSelectReg8(0x36);
+
+    if (rotate) {
+        dispdrvSendData8(0xE0);
+    } else {
+        dispdrvSendData8(0x20);
+    }
+
+    DISP_WAIT_BUSY();
     SET(DISP_CS);
 }
 
@@ -100,4 +116,5 @@ const DispDriver dispdrv = {
     .sleep = mc2pa8201Sleep,
     .wakeup = mc2pa8201Wakeup,
     .setWindow = mc2pa8201SetWindow,
+    .rotate = mc2pa8201Rotate,
 };
