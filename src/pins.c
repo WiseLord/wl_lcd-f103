@@ -20,22 +20,6 @@ static void pinsInitDisplay(void)
 
 void pinsInit(void)
 {
-#ifdef STM32F1
-    LL_GPIO_AF_Remap_SWJ_NOJTAG();
-#endif
-
-    // Enable clock for all GPIO peripherials
-#ifdef STM32F1
-    LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-    LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
-    LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
-#endif
-#ifdef STM32F3
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
-#endif
-
     LL_GPIO_InitTypeDef initDef;
 
     initDef.Mode = LL_GPIO_MODE_OUTPUT;
