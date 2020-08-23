@@ -108,8 +108,6 @@ src/ks0066.c
 src/ks0066.h
 src/main.c
 src/Makefile
-src/pins.c
-src/pins.h
 src/spi.c
 src/spi.h
 src/system/startup_stm32f103xb.s

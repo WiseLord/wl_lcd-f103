@@ -1,8 +1,8 @@
 #include "ks0066.h"
 
+#include "hwlibs.h"
 #include "utils.h"
 
-#include "../pins.h"
 #if defined(KS0066_WIRE_PCF8574)
 #include "i2c.h"
 #endif

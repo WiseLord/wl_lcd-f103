@@ -3,7 +3,6 @@
 #include "hwlibs.h"
 #include "i2c.h"
 #include "ks0066.h"
-#include "pins.h"
 #include "usart.h"
 #include "utils.h"
 
@@ -94,21 +93,6 @@ static void sysInit(void)
 
 void SysTick_Handler(void)
 {
-    static uint16_t tick = 0;
-
-    if (++tick >= 200)
-        tick = 0;
-
-    switch (tick) {
-    case 0:
-        CLR(LED1);
-        SET(LED3);
-        break;
-    case 100:
-        CLR(LED3);
-        SET(LED1);
-        break;
-    }
 }
 
 void printDispRegs(void)
@@ -190,8 +174,6 @@ int main(void)
 {
     sysInit();
 
-    pinsInit();
-
 #ifndef _DISP_16BIT
 #if IS_GPIO_LO(DISP_DATA)
     i2cInit(I2C_MASTER, 100000, 0);
@@ -209,6 +191,7 @@ int main(void)
 //    printDispRegs();
 
     glcdInit(GLCD_LANDSCAPE);
+    glcdSetBacklight(true);
 
     // Graphics
     int16_t w = glcdGet()->rect.w;
@@ -219,11 +202,11 @@ int main(void)
     if (h >= 240) {
         glcdSetFont(&fontterminus32);
     } else if (h >= 176) {
-        glcdSetFont(&fontterminus24);
+        glcdSetFont(&fontterminus20);
     } else {
-        glcdSetFont(&fontterminus16);
+        glcdSetFont(&fontterminus12);
     }
-    font7segLoad(font_7seg_4);
+    font7segLoad(font_7seg_3);
 
     int16_t tw = w / 16;
     int16_t th = h / 4;
