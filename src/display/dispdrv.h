@@ -5,14 +5,21 @@
 extern "C" {
 #endif
 
+#if defined(STM32F103xB)
+#include "hw/stm32f1.h"
+#elif defined (STM32F303xC)
+#include "hw/stm32f3.h"
+#endif
+
 #include "dispconf.h"
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #include "colors.h"
 #include "fonts.h"
 
-typedef struct {
+typedef struct _DispDriver {
     void (*init)(void);
     void (*sleep)(bool value);
     void (*setIdle)(bool value);

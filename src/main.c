@@ -1,4 +1,5 @@
 #include "display/glcd.h"
+#include "display/dispconf.h"
 #include "gui/font7seg.h"
 #include "hwlibs.h"
 #include "i2c.h"
@@ -175,16 +176,20 @@ int main(void)
     sysInit();
 
 #ifndef _DISP_16BIT
-#if IS_GPIO_LO(DISP_DATA)
+#if DISP_DATA_Pin & 0x00FF
     i2cInit(I2C_MASTER, 100000, 0);
     i2cInit(I2C_SLAVE, 100000, 0x28);
 #endif
 #endif
 
+#ifndef _DISP_16BIT
+#if DISP_DATA_Pin & 0x00FF
     ks0066Init();
 
     ks0066SetXY(0, 0);
     ks0066WriteString("Color:");
+#endif
+#endif
 
     usartInit(USART_DBG, 115200);
     usartSendString(USART_DBG, "\rUsart init done\r\n");
@@ -223,8 +228,13 @@ int main(void)
 
     static char txBuf[8];
 
+#ifndef _DISP_16BIT
+#if DISP_DATA_Pin & 0x00FF
     i2cSetRxCb(I2C_SLAVE, rx_cb);
     i2cBegin(I2C_SLAVE, 0x28);
+    i2cSlaveTransmitReceive(I2C_SLAVE, rxBuf, sizeof(rxBuf));
+#endif
+#endif
 
     char buf[32];
 
@@ -239,11 +249,15 @@ int main(void)
 
         memcpy(txBuf, cn[it].name, 8);
 
+#ifndef _DISP_16BIT
+#if DISP_DATA_Pin & 0x00FF
         i2cBegin(I2C_MASTER, 0x28);
         for (size_t i = 0; i <= strlen(txBuf); i++) {
             i2cSend(I2C_MASTER, txBuf[i]);
         }
         i2cTransmit(I2C_MASTER);
+#endif
+#endif
 
         glcdDrawCircle(rx, ry, rr, cn[it].color);
 
@@ -269,9 +283,13 @@ int main(void)
         snprintf(buf, sizeof(buf), "Rx: %-8s", resBuf);
         glcdWriteString(buf);
 
+#ifndef _DISP_16BIT
+#if DISP_DATA_Pin & 0x00FF
         ks0066SetXY(0, 1);
         snprintf(buf, sizeof(buf), "%-8s", cn[it].name);
         ks0066WriteString(buf);
+#endif
+#endif
 
         snprintf(buf, sizeof(buf), "Color: %s\r\n", cn[it].name);
         usartSendString(USART_DBG, buf);
