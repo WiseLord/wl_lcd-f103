@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-// Third-party SPI library
+// Third-party SPI library implementation
 #ifdef _DISP_SPI
 #include "spi.h"
 #define SPI_DISPLAY             SPI2
@@ -16,11 +16,11 @@ extern "C" {
 #define DISP_WAIT_BUSY()        (void)0
 #endif
 
-// Third-party milliseconds delay function
+// Third-party milliseconds delay function implementation
 #include "utils.h"
 #define DISP_MDELAY(x)          utilmDelay(x)
 
-// TFT LCD pins
+// TFT LCD pins description
 #ifdef _DISP_16BIT
 #define DISP_DATA_HI_Port       B
 #define DISP_DATA_HI_Pin        0xFF00U
@@ -28,7 +28,6 @@ extern "C" {
 #define DISP_DATA_LO_Pin        0x00FFU
 #else
 #define DISP_DATA_Port          B
-
 #define DISP_DATA_Pin           0x00FFU
 #endif
 
