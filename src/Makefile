@@ -42,6 +42,7 @@ C_SOURCES += main.c
 C_SOURCES += i2c.c
 C_SOURCES += ks0066.c
 C_SOURCES += spi.c
+C_SOURCES += timers.c
 C_SOURCES += usart.c
 C_SOURCES += utils.c
 
@@ -107,6 +108,12 @@ endif
 DISPTYPE = gc
 
 ifneq (,$(filter $(DISPLAY), \
+  MN14032   \
+))
+  DISPTYPE = gg
+  DISPSIZE = 140x32
+  C_DEFS += -D_DISP_FB
+else ifneq (,$(filter $(DISPLAY), \
   SSD1322   \
 ))
   DISPTYPE = gg

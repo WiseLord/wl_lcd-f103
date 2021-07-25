@@ -4,6 +4,7 @@
 #include "hwlibs.h"
 #include "i2c.h"
 #include "ks0066.h"
+#include "timers.h"
 #include "usart.h"
 #include "utils.h"
 
@@ -243,6 +244,25 @@ int main(void)
 
     char buf[32];
 
+#ifdef _MN14032
+    timerInit(TIM_DISPSCAN, 149, 99); // 10kHz timer
+    while (1) {
+        glcdSetFontColor(COLOR_WHITE);
+        glcdSetXY(0, -2);
+        glcdWriteString("Hello, world, it's a long string");
+        glcdSetXY(0, 10);
+        glcdWriteString("Hello, world, it's a long string");
+        glcdSetXY(0, 22);
+        glcdWriteString("Hello, world, it's a long string");
+        LL_mDelay(1000);
+        glcdDrawRect(0, 0, 140, 32, COLOR_BLACK);
+        LL_mDelay(100);
+        glcdDrawLine(0, 0, 139, 31, COLOR_WHITE);
+        glcdDrawLine(0, 31, 139, 0, COLOR_WHITE);
+        LL_mDelay(1000);
+    }
+#endif
+
     while (1) {
         static size_t it = 0;
         if (++it >= sizeof(cn) / sizeof (cn[0])) {
@@ -304,4 +324,15 @@ int main(void)
     }
 
     return 0;
+}
+
+void TIM_DISPSCAN_HANDLER(void)
+{
+    if (LL_TIM_IsActiveFlag_UPDATE(TIM_DISPSCAN)) {
+        // Clear the update interrupt flag
+        LL_TIM_ClearFlag_UPDATE(TIM_DISPSCAN);
+
+        // Callbacks
+        glcdScanIRQ();
+    }
 }

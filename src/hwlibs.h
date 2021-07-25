@@ -14,6 +14,7 @@ extern "C" {
 #include <stm32f1xx_ll_rcc.h>
 #include <stm32f1xx_ll_spi.h>
 #include <stm32f1xx_ll_system.h>
+#include <stm32f1xx_ll_tim.h>
 #include <stm32f1xx_ll_usart.h>
 #include <stm32f1xx_ll_utils.h>
 
@@ -26,6 +27,7 @@ extern "C" {
 #include <stm32f3xx_ll_rcc.h>
 #include <stm32f3xx_ll_spi.h>
 #include <stm32f3xx_ll_system.h>
+#include <stm32f3xx_ll_tim.h>
 #include <stm32f3xx_ll_usart.h>
 #include <stm32f3xx_ll_utils.h>
 
@@ -56,6 +58,9 @@ extern "C" {
 #define I2C_SLAVE               I2C2
 
 #define I2C_KS0066              I2C1
+
+#define TIM_DISPSCAN            TIM2
+#define TIM_DISPSCAN_HANDLER    TIM2_IRQHandler
 
 #ifdef __cplusplus
 }

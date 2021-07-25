@@ -19,6 +19,7 @@ src/display/dispdrv/lgdp4524.c
 src/display/dispdrv/lph9157.c
 src/display/dispdrv/ls020.c
 src/display/dispdrv/mc2pa8201.c
+src/display/dispdrv/mn14032.c
 src/display/dispdrv/r61581.c
 src/display/dispdrv/rm68140.c
 src/display/dispdrv/s6d0129.c
@@ -78,6 +79,7 @@ src/drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_i2c.h
 src/drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_rcc.h
 src/drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_spi.h
 src/drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_system.h
+src/drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_tim.h
 src/drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usart.h
 src/drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_utils.h
 src/drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c
@@ -93,6 +95,7 @@ src/drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_pwr.h
 src/drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_rcc.h
 src/drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_spi.h
 src/drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_system.h
+src/drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_tim.h
 src/drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_usart.h
 src/drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_ll_utils.h
 src/drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_gpio.c
@@ -121,6 +124,8 @@ src/system/stm32f303cc_flash.ld
 src/system/stm32f303xc_openocd.cfg
 src/system/system_stm32f1xx.c
 src/system/system_stm32f3xx.c
+src/timers.c
+src/timers.h
 src/usart.c
 src/usart.h
 src/utils.c
