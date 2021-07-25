@@ -1,6 +1,5 @@
 #include "glcd.h"
 
-#include <stdlib.h>
 #include <string.h>
 
 #include "dispdrv.h"
@@ -108,6 +107,13 @@ void glcdSetBacklight(bool value)
 #endif
 }
 
+void glcdSetBrightness(uint8_t value)
+{
+    if (glcd.drv->setBrightness) {
+        glcd.drv->setBrightness(value);
+    }
+}
+
 Glcd *glcdGet(void)
 {
     return &glcd;
@@ -145,11 +151,9 @@ void glcdSetIdle(bool value)
     }
 }
 
-void glcdFbSync(void)
+void glcdSync(void)
 {
-    if (glcd.drv->fbSync) {
-        glcd.drv->fbSync();
-    }
+    dispdrvSync();
 }
 
 
@@ -277,9 +281,6 @@ void glcdDrawImage(const __flash tImage *img, color_t color, color_t bgColor)
         return;
     }
 
-    uint8_t *unRleData = malloc((size_t)(img->width * ((img->height + 7) / 8)));
-    glcdUnRleImg(img, unRleData);
-
     GlcdRect *rect = &glcd.rect;
 
     int16_t x = glcd.x;
@@ -307,7 +308,6 @@ void glcdDrawImage(const __flash tImage *img, color_t color, color_t bgColor)
     }
 
     if (w <= 0 || h <= 0) {
-        free(unRleData);
         return;
     }
 
@@ -316,12 +316,13 @@ void glcdDrawImage(const __flash tImage *img, color_t color, color_t bgColor)
 
     bool portrate = (glcd.orientation & GLCD_PORTRATE);
 
+    uint8_t unRleData[(size_t)(img->width * ((img->height + 7) / 8))];
+    glcdUnRleImg(img, unRleData);
+
     dispdrvDrawImage(unRleData, img->width,
                      portrate, x, y,
                      color, bgColor,
                      xOft, yOft, w, h);
-
-    free(unRleData);
 }
 
 uint16_t glcdStrToUStr(const char *str, UChar *ustr)

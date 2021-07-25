@@ -229,7 +229,7 @@ int main(void)
     int16_t ry = h / 4 * 1;
     int16_t rr = ry - 8;
     glcdDrawRing(rx, ry, ry - 2, 3, COLOR_WHITE);
-    glcdFbSync();
+    glcdSync();
 
     static char txBuf[8];
 
@@ -298,7 +298,7 @@ int main(void)
 
         snprintf(buf, sizeof(buf), "Color: %s\r\n", cn[it].name);
         usartSendString(USART_DBG, buf);
-        glcdFbSync();
+        glcdSync();
 
         LL_mDelay(500);
     }

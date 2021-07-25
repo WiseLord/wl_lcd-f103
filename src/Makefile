@@ -54,35 +54,27 @@ ifneq (,$(filter $(DISPLAY), \
   SSD1283A   \
 ))
   DISPSIZE = 130x130
-endif
-
-ifneq (,$(filter $(DISPLAY), \
+else ifneq (,$(filter $(DISPLAY), \
   ILI9163   \
   S6D0144   \
   ST7735    \
 ))
   DISPSIZE = 160x128
-endif
-
-ifneq (,$(filter $(DISPLAY), \
+else ifneq (,$(filter $(DISPLAY), \
   L2F50126  \
   LPH9157   \
   LS020     \
   SSD1286A  \
 ))
   DISPSIZE = 176x132
-endif
-
-ifneq (,$(filter $(DISPLAY), \
+else ifneq (,$(filter $(DISPLAY), \
   HX8340    \
   ILI9225   \
   LGDP4524  \
   S6D0164   \
 ))
   DISPSIZE = 220x176
-endif
-
-ifneq (,$(filter $(DISPLAY), \
+else ifneq (,$(filter $(DISPLAY), \
   HX8347A   \
   HX8347D   \
   ILI9320   \
@@ -95,21 +87,19 @@ ifneq (,$(filter $(DISPLAY), \
   SSD2119   \
 ))
   DISPSIZE = 320x240
-endif
-
-ifneq (,$(filter $(DISPLAY), \
+else ifneq (,$(filter $(DISPLAY), \
   ILI9327   \
   S6D04D1   \
   ST7793    \
 ))
   DISPSIZE = 400x240
-endif
-
-ifneq (,$(filter $(DISPLAY), \
+else ifneq (,$(filter $(DISPLAY), \
+  HX8357C   \
   ILI9481   \
   ILI9486   \
   R61581    \
   RM68140   \
+  ST7796S   \
 ))
   DISPSIZE = 480x320
 endif
@@ -124,7 +114,7 @@ ifneq (,$(filter $(DISPLAY), \
   C_DEFS += -D_DISP_FB
 endif
 
-C_SOURCES += display/$(DISPTYPE)$(DISPSIZE)/$(call lc,$(DISPLAY)).c
+C_SOURCES += display/dispdrv/$(call lc,$(DISPLAY)).c
 C_SOURCES += display/dispdrv.c
 C_SOURCES += display/glcd.c
 C_DEFS += -D_$(DISPLAY)
