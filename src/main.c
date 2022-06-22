@@ -7,6 +7,7 @@
 #include "timers.h"
 #include "usart.h"
 #include "utils.h"
+#include "vac.h"
 
 #include <ctype.h>
 #include <stdio.h>
@@ -63,6 +64,8 @@ static void sysInit(void)
     NVIC_Init();
     SystemClock_Config();
 
+    LL_SYSTICK_EnableIT();
+
     LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
     // Enable clock for all GPIO peripherials
@@ -95,6 +98,7 @@ static void sysInit(void)
 
 void SysTick_Handler(void)
 {
+    vacUpdateTimers();
 }
 
 #ifdef _DISP_READ_ENABLED
@@ -181,6 +185,8 @@ int main(void)
 {
     sysInit();
 
+    vacInit();
+
 #ifndef _DISP_16BIT
 #if DISP_DATA_Pin & 0x00FF
     i2cInit(I2C_MASTER, 100000, 0);
@@ -262,6 +268,23 @@ int main(void)
         LL_mDelay(1000);
     }
 #endif
+
+    glcdSetFontColor(COLOR_WHITE);
+    glcdSetFontBgColor(COLOR_NERO);
+
+    vacSetTimer(1000 * 20);
+    vacSetState(VAC_ON);
+
+    while (1) {
+        glcdSetXY(0, 0);
+        int32_t time = vacGetTimer() / 1000;
+
+        int32_t min = time / 60;
+        int32_t sec = time % 60;
+
+        snprintf(buf, sizeof(buf), "%02ld:%02ld", min, sec);
+        glcdWriteString(buf);
+    }
 
     while (1) {
         static size_t it = 0;
