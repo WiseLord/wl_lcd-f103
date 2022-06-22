@@ -20,19 +20,22 @@ void canvasInit()
     glcdSetFontBgColor(COLOR_WHITE);
 
     glcdSetFont(&fontterminus32);
-    font7segLoad(font_7seg_10);
 }
 
 void canvasShowTimer()
 {
+    font7segLoad(font_7seg_8);
     glcdSetXY(20, 20);
-    int32_t time = vacGetTimer() / 1000;
+    int32_t time = vacGetTimer();
 
-    int32_t min = time / 60;
-    int32_t sec = time % 60;
+    int32_t msec = time % 1000 / 100;
+
+    int32_t min = time / 1000 / 60;
+    int32_t sec = time / 1000 % 60;
+
 
     char buf[32];
-    snprintf(buf, sizeof(buf), "%02ld:%02ld", min, sec);
+    snprintf(buf, sizeof(buf), "%02ld:%02ld.%01ld", min, sec, msec);
 //        glcdWriteString(buf);
     font7segWriteString(buf);
 }

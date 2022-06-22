@@ -62,6 +62,9 @@ extern "C" {
 #define TIM_DISPSCAN            TIM2
 #define TIM_DISPSCAN_HANDLER    TIM2_IRQHandler
 
+#define TIM_INPUT               TIM4
+#define TIM_INPUT_HANDLER       TIM4_IRQHandler
+
 #ifdef __cplusplus
 }
 #endif

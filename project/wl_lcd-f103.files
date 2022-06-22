@@ -103,6 +103,7 @@
 ../src/drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_rcc.c
 ../src/drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_usart.c
 ../src/drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_utils.c
+../src/event.h
 ../src/gui/canvas.c
 ../src/gui/canvas.h
 ../src/gui/font7seg.c
@@ -110,10 +111,12 @@
 ../src/hwlibs.h
 ../src/i2c.c
 ../src/i2c.h
+../src/input.h
 ../src/ks0066.c
 ../src/ks0066.h
 ../src/main.c
 ../src/Makefile
+../src/input.c
 ../src/spi.c
 ../src/spi.h
 ../src/system/startup_stm32f103xb.s

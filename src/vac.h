@@ -7,6 +7,8 @@ extern "C" {
 
 #include <stdint.h>
 
+#include "event.h"
+
 typedef enum {
     VAC_OFF = 0,
     VAC_ON,
@@ -28,6 +30,11 @@ void vacSetState(VacState value);
 void vacUpdateTimers();
 
 int32_t vacGetTimer();
+
+Event vacGetButtons();
+
+void vacEventGet();
+void vacEventHandle();
 
 #ifdef __cplusplus
 }

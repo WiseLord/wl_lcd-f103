@@ -1,6 +1,7 @@
 #include "display/glcd.h"
 #include "gui/canvas.h"
 #include "hwlibs.h"
+#include "input.h"
 #include "vac.h"
 
 static void NVIC_Init(void)
@@ -91,17 +92,23 @@ void SysTick_Handler(void)
     vacUpdateTimers();
 }
 
+
+
 int main(void)
 {
     sysInit();
     vacInit();
 
+    inputInit();
     canvasInit();
 
-    vacSetTimer(1000 * 20);
+    vacSetTimer(1000 * 3600);
     vacSetState(VAC_ON);
 
     while (1) {
+        vacEventGet();
+        vacEventHandle();
+
         canvasShowTimer();
     }
 
