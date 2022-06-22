@@ -2,8 +2,9 @@
 
 #include "hwlibs.h"
 
-#include <stdarg.h>
-#include <stdio.h>
+#include <stddef.h>
+
+#include <stdlib.h>
 #include <string.h>
 
 void utilInitSysCounter(void)
@@ -51,6 +52,18 @@ bool utilReadChar(LineParse *lp, char ch)
     }
 }
 
+bool utilIsPrefixInt(char *line, char *prefix, int *ret)
+{
+    int len = strlen(prefix);
+
+    if (strncmp(line, prefix, len) == 0) {
+        *ret = strtol(line + len, NULL, 10);
+        return true;
+    }
+
+    return false;
+}
+
 bool utilIsPrefix(const char *line, const char *prefix)
 {
     char p;
@@ -81,4 +94,25 @@ void utilTrimLineEnd(char *line)
         line[len - 1] = '\0';
         len--;
     }
+}
+
+void utilEnableSwd(bool value)
+{
+//    value = true;
+
+#if defined(STM32F1)
+    static bool swd = false;
+
+    if (value) {
+        if (!swd) {
+            LL_GPIO_AF_Remap_SWJ_NOJTAG();
+            swd = true;
+        }
+    } else {
+        if (swd) {
+            LL_GPIO_AF_DisableRemap_SWJ();
+            swd = false;
+        }
+    }
+#endif
 }
