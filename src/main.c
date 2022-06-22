@@ -1,17 +1,7 @@
 #include "display/glcd.h"
-#include "display/dispconf.h"
-#include "gui/font7seg.h"
+#include "gui/canvas.h"
 #include "hwlibs.h"
-#include "i2c.h"
-#include "ks0066.h"
-#include "timers.h"
-#include "usart.h"
-#include "utils.h"
 #include "vac.h"
-
-#include <ctype.h>
-#include <stdio.h>
-#include <string.h>
 
 static void NVIC_Init(void)
 {
@@ -106,34 +96,13 @@ int main(void)
     sysInit();
     vacInit();
 
-    glcdInit(GLCD_LANDSCAPE);
-    glcdSetBacklight(true);
-
-    // Graphics
-    int16_t w = glcdGet()->rect.w;
-    int16_t h = glcdGet()->rect.h;
-
-    glcdDrawRect(0, 0, w, h, COLOR_WHITE);
-    glcdSetFontColor(COLOR_BLACK);
-    glcdSetFontBgColor(COLOR_WHITE);
-
-    glcdSetFont(&fontterminus32);
-    font7segLoad(font_7seg_10);
+    canvasInit();
 
     vacSetTimer(1000 * 20);
     vacSetState(VAC_ON);
 
     while (1) {
-        glcdSetXY(20, 20);
-        int32_t time = vacGetTimer() / 1000;
-
-        int32_t min = time / 60;
-        int32_t sec = time % 60;
-
-        char buf[32];
-        snprintf(buf, sizeof(buf), "%02ld:%02ld", min, sec);
-//        glcdWriteString(buf);
-        font7segWriteString(buf);
+        canvasShowTimer();
     }
 
     return 0;

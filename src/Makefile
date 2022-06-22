@@ -47,6 +47,7 @@ C_SOURCES += usart.c
 C_SOURCES += utils.c
 C_SOURCES += vac.c
 
+C_SOURCES += gui/canvas.c
 C_SOURCES += gui/font7seg.c
 
 # Display source files

@@ -103,6 +103,8 @@
 ../src/drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_rcc.c
 ../src/drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_usart.c
 ../src/drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_utils.c
+../src/gui/canvas.c
+../src/gui/canvas.h
 ../src/gui/font7seg.c
 ../src/gui/font7seg.h
 ../src/hwlibs.h

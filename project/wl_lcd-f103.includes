@@ -9,3 +9,4 @@
 ../src/display/hw
 ../src/display/dispdrv
 ../src/display
+../src/gui
