@@ -49,7 +49,8 @@ extern "C" {
 #define IN(p)                   (LL_GPIO_SetPinMode(CONCAT(p, _Port), CONCAT(p, _Pin), LL_GPIO_MODE_INPUT))
 
 // Project-specific definitions
-#define USART_DBG               USART1
+#define USART_VAC               USART1
+#define USART_VAC_HANDLER       USART1_IRQHandler
 
 #define LL_I2C1_SCL_PIN         LL_GPIO_PIN_8
 #define LL_I2C1_SDA_PIN         LL_GPIO_PIN_9

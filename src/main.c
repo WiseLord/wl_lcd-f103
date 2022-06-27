@@ -2,6 +2,7 @@
 #include "gui/canvas.h"
 #include "hwlibs.h"
 #include "input.h"
+#include "usart.h"
 #include "vac.h"
 
 static void NVIC_Init(void)
@@ -98,6 +99,9 @@ int main(void)
 {
     sysInit();
     vacInit();
+
+    usartInit(USART_VAC, 115200);
+    usartSetRxIRQ(USART_VAC, true);
 
     inputInit();
     canvasInit();

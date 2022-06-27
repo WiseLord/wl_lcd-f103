@@ -14,12 +14,14 @@ typedef enum {
     EVENT_PAUSE_TIMER,
     EVENT_CONTINUE_TIMER,
 
+    EVENT_START_TIMER,
+
     EVENT_END
 } EventType;
 
 typedef struct {
     EventType type;
-    int16_t value;
+    int32_t value;
 } Event;
 
 #ifdef __cplusplus

@@ -117,6 +117,8 @@
 ../src/main.c
 ../src/Makefile
 ../src/input.c
+../src/ringbuf.c
+../src/ringbuf.h
 ../src/spi.c
 ../src/spi.h
 ../src/system/startup_stm32f103xb.s
