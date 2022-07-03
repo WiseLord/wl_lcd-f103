@@ -41,6 +41,7 @@ void max7219SendCmd(uint8_t reg, uint8_t data)
         max7219SendByte(reg);
         max7219SendByte(data);
     }
+    DISP_WAIT_BUSY();
     SET(DISP_CS);
 }
 
@@ -62,6 +63,7 @@ void max7219FbSync(void)
             max7219SendByte(MAX7219_DIGIT_0 + i);
             max7219SendByte(fb[8 * j + i]);
         }
+        DISP_WAIT_BUSY();
         SET(DISP_CS);
     }
 }
