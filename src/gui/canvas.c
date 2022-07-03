@@ -24,8 +24,9 @@ void canvasInit()
 
 void canvasShowTimer()
 {
-    font7segLoad(font_7seg_8);
-    glcdSetXY(20, 20);
+    glcdSetFont(&fontterminus12);
+
+    glcdSetXY(0, -2);
     int32_t time = vacGetTimer();
 
     int32_t msec = time % 1000 / 100;
@@ -36,6 +37,5 @@ void canvasShowTimer()
 
     char buf[32];
     snprintf(buf, sizeof(buf), "%02ld:%02ld.%01ld", min, sec, msec);
-//        glcdWriteString(buf);
-    font7segWriteString(buf);
+    glcdWriteString(buf);
 }

@@ -2,7 +2,7 @@ PROJECT = wl_lcd
 
 STM32_MCU = F103C8
 
-DISPLAY = ILI9341
+DISPLAY = MAX7219
 DISPVAR = SPI
 
 DEBUG = 1
@@ -123,6 +123,12 @@ else ifneq (,$(filter $(DISPLAY), \
   DISPTYPE = gg
   DISPSIZE = 256x64
   C_DEFS += -D_DISP_FB
+else ifneq (,$(filter $(DISPLAY), \
+    MAX7219   \
+  ))
+    DISPTYPE = gg
+    DISPSIZE = 32x8
+    C_DEFS += -D_DISP_FB
 endif
 
 C_SOURCES += display/dispdrv/$(call lc,$(DISPLAY)).c

@@ -18,6 +18,7 @@
 ../src/display/dispdrv/lgdp4524.c
 ../src/display/dispdrv/lph9157.c
 ../src/display/dispdrv/ls020.c
+../src/display/dispdrv/max7219.c
 ../src/display/dispdrv/mc2pa8201.c
 ../src/display/dispdrv/mn14032.c
 ../src/display/dispdrv/r61581.c
