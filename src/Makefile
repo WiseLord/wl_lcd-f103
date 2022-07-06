@@ -129,6 +129,7 @@ else ifneq (,$(filter $(DISPLAY), \
     DISPTYPE = gg
     DISPSIZE = 32x8
     C_DEFS += -D_DISP_FB
+    C_DEFS += -D_SPI_OPEN_DRAIN
 endif
 
 C_SOURCES += display/dispdrv/$(call lc,$(DISPLAY)).c

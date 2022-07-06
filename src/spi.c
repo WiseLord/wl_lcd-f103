@@ -21,7 +21,11 @@ static void spiInitPins(SPI_TypeDef *SPIx, bool read)
     GPIO_InitStruct.Pin = sckPin | mosiPin;
     GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+#ifdef _SPI_OPEN_DRAIN
+    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
+#else
     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+#endif
 #ifdef STM32F3
     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
     GPIO_InitStruct.Alternate = LL_GPIO_AF_5;

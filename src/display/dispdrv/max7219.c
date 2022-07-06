@@ -47,6 +47,7 @@ void max7219SendCmd(uint8_t reg, uint8_t data)
 
 void max7219Init(void)
 {
+    OUT_OD(DISP_CS);
     max7219SendCmd(MAX7219_SHUTDOWN, 1);    // Power on
     max7219SendCmd(MAX7219_DISP_TEST, 0);   // Test mode off
     max7219SendCmd(MAX7219_DEC_MODE, 0);    // Use led matrix

@@ -34,6 +34,22 @@ extern "C" {
             0); \
     } while (0);
 
+#define OUT_OD(p) \
+    do { \
+        MODIFY_REG(GPIO(CONCAT(p, _Port)->MODER), \
+            (GPIO_MODER_MODER0 << (CONCAT(p, _Pin) * 2U)), \
+            (GPIO_MODER_MODER0_0 << (CONCAT(p, _Pin) * 2U))); \
+        MODIFY_REG(GPIO(CONCAT(p, _Port))->OSPEEDR, \
+            (GPIO_OSPEEDER_OSPEEDR0 << (CONCAT(p, _Pin)) * 2U), \
+            (GPIO_OSPEEDER_OSPEEDR0 << (CONCAT(p, _Pin) * 2U))); \
+        MODIFY_REG(GPIO(CONCAT(p, _Port))->OTYPER, \
+            CONCAT(p, _Pin), \
+            1); \
+        MODIFY_REG(GPIO(CONCAT(p, _Port))->PUPDR, \
+            (GPIO_PUPDR_PUPDR0 << (CONCAT(p, _Pin) * 2U)), \
+            0); \
+    } while (0);
+
 #define READ_BYTE(p)            (IS_GPIO_LO(p) ? \
                                     (READ(p) & 0x00FF) : \
                                     (READ(p) & 0xFF00) >> 8)

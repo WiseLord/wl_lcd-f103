@@ -29,6 +29,17 @@ extern "C" {
             (0x3 << ((CONCAT(p, _Pin) & 0x7) * 4U))); \
     }
 
+#define OUT_OD(p) \
+    if (CONCAT(p, _Pin) < 8) { \
+        MODIFY_REG(GPIO(CONCAT(p, _Port))->CRL, \
+            ((GPIO_CRL_CNF0 | GPIO_CRL_MODE0) << ((CONCAT(p, _Pin) & 0x7) * 4U)), \
+            (0x7 << ((CONCAT(p, _Pin) & 0x7) * 4U))); \
+    } else { \
+        MODIFY_REG(GPIO(CONCAT(p, _Port))->CRH, \
+            ((GPIO_CRL_CNF0 | GPIO_CRL_MODE0) << ((CONCAT(p, _Pin) & 0x7) * 4U)), \
+            (0x7 << ((CONCAT(p, _Pin) & 0x7) * 4U))); \
+    }
+
 #define READ_BYTE(p)            (IS_GPIO_LO(p) ? \
                                     (READ(p) & 0x00FF) : \
                                     (READ(p) & 0xFF00) >> 8)
