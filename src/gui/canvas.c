@@ -16,8 +16,8 @@ void canvasInit()
     int16_t h = glcdGet()->rect.h;
 
     glcdDrawRect(0, 0, w, h, COLOR_WHITE);
-    glcdSetFontColor(COLOR_BLACK);
-    glcdSetFontBgColor(COLOR_WHITE);
+    glcdSetFontColor(COLOR_WHITE);
+    glcdSetFontBgColor(COLOR_BLACK);
 
     glcdSetFont(&fontterminus32);
 }

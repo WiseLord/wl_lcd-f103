@@ -114,6 +114,7 @@ int main(void)
         vacEventHandle();
 
         canvasShowTimer();
+        glcdSync();
     }
 
     return 0;

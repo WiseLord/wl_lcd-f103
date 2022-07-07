@@ -48,6 +48,7 @@ void max7219SendCmd(uint8_t reg, uint8_t data)
 void max7219Init(void)
 {
     OUT_OD(DISP_CS);
+
     max7219SendCmd(MAX7219_SHUTDOWN, 1);    // Power on
     max7219SendCmd(MAX7219_DISP_TEST, 0);   // Test mode off
     max7219SendCmd(MAX7219_DEC_MODE, 0);    // Use led matrix
@@ -56,11 +57,11 @@ void max7219Init(void)
 
 void max7219FbSync(void)
 {
-    uint8_t i, j;
+    int8_t i, j;
 
     for (i = 0; i < 8; i++) {
         CLR(DISP_CS);
-        for (j = 0; j < MATRIX_CNT; j++) {
+        for (j = MATRIX_CNT - 1; j >= 0; j--) {
             max7219SendByte(MAX7219_DIGIT_0 + i);
             max7219SendByte(fb[8 * j + i]);
         }
@@ -90,7 +91,7 @@ void max7219FbSetPixel(int16_t x, int16_t y, color_t color)
 }
 
 const DispDriver dispdrv = {
-    .width = DISP_WIDTH,
+    .width = DISP_WIDTH * MATRIX_CNT,
     .height = DISP_HEIGHT,
     .init = max7219Init,
     .sleep = max7219Sleep,
