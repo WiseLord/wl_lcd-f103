@@ -83,10 +83,16 @@ void max7219Sleep(bool value)
 
 void max7219FbSetPixel(int16_t x, int16_t y, color_t color)
 {
+    int16_t X = x;
+    int16_t Y = y;
+
+//    X = x / 8 * 8 + (7 - y);
+//    Y = x % 8;
+
     if (color) {
-        fb[x] |= (1 << y);
+        fb[X] |= (1 << Y);
     } else {
-        fb[x] &= ~(1 << y);
+        fb[X] &= ~(1 << Y);
     }
 }
 
