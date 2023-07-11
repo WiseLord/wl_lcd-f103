@@ -13,6 +13,7 @@ void spiInit(void *spi, bool read);
 void spiWaitBusy(void *spi);
 
 void spiSendByte(void *spi, uint8_t data);
+uint8_t spiReadByte(void *spi);
 
 #ifdef __cplusplus
 }

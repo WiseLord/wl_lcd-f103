@@ -181,6 +181,8 @@ int main(void)
 {
     sysInit();
 
+    spiInit(SPI1, true);
+
 #ifndef _DISP_16BIT
 #if DISP_DATA_Pin & 0x00FF
     i2cInit(I2C_MASTER, 100000, 0);
@@ -220,7 +222,7 @@ int main(void)
     font7segLoad(font_7seg_3);
 
     int16_t tw = w / 16;
-    int16_t th = h / 4;
+    int16_t th = h / 8;
 
     glcdDrawRect(w / 2 + tw * 1, h / 8 * 5, tw / 4 * 6, th, COLOR_RED);
     glcdDrawRect(w / 2 + tw * 3, h / 8 * 5, tw / 4 * 6, th, COLOR_LIME);
@@ -306,6 +308,12 @@ int main(void)
 
         glcdSetXY(2, h / 16 * 13);
         snprintf(buf, sizeof(buf), "Rx: %-8s", resBuf);
+        glcdWriteString(buf);
+
+        spiSendByte(SPI1, 0xAA);
+        uint8_t data = spiReadByte(SPI1);
+        glcdSetXY(200, h / 16 * 13);
+        snprintf(buf, sizeof(buf), "SPI: 0x%02X", data);
         glcdWriteString(buf);
 
 #ifndef _DISP_16BIT

@@ -86,5 +86,16 @@ void spiSendByte(void *spi, uint8_t data)
 
     while (!LL_SPI_IsActiveFlag_TXE(SPIx));
     LL_SPI_TransmitData8(SPIx, data);
+}
 
+uint8_t spiReadByte(void *spi)
+{
+    uint8_t ret;
+
+    spiSendByte(spi, 0x00);
+
+    while(!LL_SPI_IsActiveFlag_RXNE(spi));
+    ret = LL_SPI_ReceiveData8(spi);
+
+    return ret;
 }
