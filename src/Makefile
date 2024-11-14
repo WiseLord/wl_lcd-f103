@@ -99,6 +99,7 @@ else ifneq (,$(filter $(DISPLAY), \
   HX8357C   \
   ILI9481   \
   ILI9486   \
+  ILI9488   \
   R61581    \
   RM68140   \
   ST7796S   \
