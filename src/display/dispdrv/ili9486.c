@@ -9,7 +9,7 @@ void ili9486Init(void)
     DISP_MDELAY(100);
 
     dispdrvSelectReg8(0x3A);     // Interface Pixel Format
-    dispdrvSendData8(0x55);
+    dispdrvSendData8(TFT_PIXFMT);
 
     dispdrvSelectReg8(0xC0);     // Power Control 1
     dispdrvSendData8(0x0d);
